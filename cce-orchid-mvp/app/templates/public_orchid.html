@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{{ orchid.display_name }} · Orchid Enthusiasts{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <p class="eyebrow">{{ orchid.tenant.name }}</p>
+  <h1>{{ orchid.display_name }}</h1>
+  <p>{{ orchid.accession_number }}</p>
+  {% if authorized %}
+    <dl class="details"><div><dt>Status</dt><dd>{{ orchid.status|replace('_',' ')|title }}</dd></div><div><dt>Location</dt><dd>{{ orchid.location.path if orchid.location else 'Not assigned' }}</dd></div></dl>
+    <a class="button primary full" href="/orchids/{{ orchid.id }}">Open Orchid Record</a>
+  {% elif is_shared %}
+    <p>{{ orchid.narrative or 'This orchid is shared by its collector.' }}</p>
+  {% else %}
+    <p>This orchid belongs to a private collection. Sign in with an authorized PCO account to view it.</p>
+    <a class="button primary full" href="/login">Sign in</a>
+  {% endif %}
+</section>
+{% endblock %}

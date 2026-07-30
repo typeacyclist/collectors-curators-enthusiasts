@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Orchid Enthusiasts{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">Collectors–Curators–Enthusiasts</p>
+  <h1>Keep every orchid identified, located, and labeled.</h1>
+  <p class="lede">Mobile-first orchid records and durable QR labels for Park City Orchids and More.</p>
+  {% if context %}<a class="button primary" href="/app">Open PCO</a>{% else %}<a class="button primary" href="/login">Sign in</a>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}PCO Dashboard{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div><p class="eyebrow">{{ context.tenant.name }}</p><h1>Dashboard</h1></div>
+  <a class="button primary" href="/orchids/new">Add Orchid</a>
+</div>
+<section class="stats">
+  <a class="stat" href="/orchids"><strong>{{ counts.orchids }}</strong><span>Active orchids</span></a>
+  <a class="stat" href="/locations"><strong>{{ counts.locations }}</strong><span>Locations</span></a>
+  <a class="stat" href="/orchids"><strong>{{ counts.unprinted }}</strong><span>Labels not printed</span></a>
+</section>
+<section class="panel">
+  <div class="section-heading"><h2>Recently added</h2><a href="/orchids">View all</a></div>
+  {% if recent %}
+  <div class="card-list">
+  {% for orchid in recent %}
+    <a class="item-card" href="/orchids/{{ orchid.id }}">
+      <div><strong>{{ orchid.display_name }}</strong><span>{{ orchid.accession_number }}</span></div>
+      <span class="muted">{{ orchid.location.path if orchid.location else 'No location' }}</span>
+    </a>
+  {% endfor %}
+  </div>
+  {% else %}<div class="empty"><p>No orchids yet.</p><a class="button primary" href="/orchids/new">Add the first orchid</a></div>{% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Tenants · CCE Administration{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Platform administration</p><h1>Tenants</h1></div></div>
+<section class="split">
+  <div class="panel"><h2>Create tenant</h2><form class="form-grid" method="post" action="/admin/tenants"><label>Name<input name="name" required></label><label>Short name<input name="short_name" required maxlength="24"></label><label class="span-2">Tenant administrator email<input name="admin_email" type="email" required></label><button class="button primary" type="submit">Create Tenant</button></form></div>
+  <div class="panel"><h2>Existing tenants</h2><div class="card-list">{% for tenant in tenants %}<div class="item-card static"><div><strong>{{ tenant.name }}</strong><span>{{ tenant.short_name }} · {{ tenant.status }}</span></div><form method="post" action="/tenant/select/{{ tenant.id }}"><button class="link-button" type="submit">Open</button></form></div>{% endfor %}</div></div>
+</section>
+{% endblock %}

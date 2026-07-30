@@ -1,0 +1,39 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# React / Node
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+firebase-adminsdk-*.json
+*service-account*.json
+application_default_credentials.json
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Local databases and generated files
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE and operating system
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
