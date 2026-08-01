@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://collectors-curators-enthusiasts.dev/schemas/core.schema.json",
+  "title": "CCE Core Contracts",
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sharingLevel": {
+      "type": "string",
+      "enum": ["PRIVATE", "TENANT", "PLATFORM", "SHARED_LINK", "PUBLIC"]
+    },
+    "thingStatus": {
+      "type": "string",
+      "enum": ["DRAFT", "ACTIVE", "QUARANTINE", "FOR_SALE", "RESERVED", "TRANSFERRED", "ARCHIVED"]
+    },
+    "syncState": {
+      "type": "string",
+      "enum": [
+        "LOCAL_ONLY",
+        "WAITING_FOR_NETWORK",
+        "UPLOADING",
+        "WAITING_FOR_AI",
+        "AI_REVIEW_REQUIRED",
+        "SYNCED",
+        "SYNC_ERROR"
+      ]
+    },
+    "mediaReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["MediaUUID", "Kind", "LocalOrRemoteReference"],
+      "properties": {
+        "MediaUUID": { "$ref": "#/$defs/uuid" },
+        "Kind": { "type": "string", "enum": ["PHOTO", "DOCUMENT", "LABEL_IMAGE"] },
+        "Category": { "type": ["string", "null"] },
+        "LocalOrRemoteReference": { "type": "string", "minLength": 1 },
+        "OriginalRetained": { "type": "boolean", "default": true },
+        "DerivativeProfile": { "type": ["string", "null"] }
+      }
+    },
+    "thingIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ThingUUID", "LabelID"],
+      "properties": {
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/uuid" },
+        "AccessionNumber": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "thing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ThingUUID",
+        "LabelID",
+        "TenantUUID",
+        "CollectionUUID",
+        "TemplateID",
+        "TemplateVersion",
+        "DisplayName",
+        "Status",
+        "SharingLevel",
+        "Version",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "properties": {
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/uuid" },
+        "AccessionNumber": { "type": ["string", "null"] },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "CollectionUUID": { "$ref": "#/$defs/uuid" },
+        "TemplateID": { "type": "string", "minLength": 1 },
+        "TemplateVersion": { "type": "string", "minLength": 1 },
+        "DisplayName": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "CurrentLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Status": { "$ref": "#/$defs/thingStatus" },
+        "SharingLevel": { "$ref": "#/$defs/sharingLevel" },
+        "PrimaryMediaUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Version": { "type": "integer", "minimum": 1 },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" },
+        "UpdatedAt": { "$ref": "#/$defs/timestamp" },
+        "ArchivedAt": { "anyOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }] }
+      }
+    },
+    "draftThing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "DraftUUID",
+        "ThingUUID",
+        "LabelID",
+        "TenantUUID",
+        "CollectionUUID",
+        "TemplateID",
+        "TemplateVersion",
+        "Narrative",
+        "Media",
+        "SyncState",
+        "CreatedAt",
+        "UpdatedAt",
+        "RetryCount"
+      ],
+      "properties": {
+        "DraftUUID": { "$ref": "#/$defs/uuid" },
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "CollectionUUID": { "$ref": "#/$defs/uuid" },
+        "TemplateID": { "type": "string", "minLength": 1 },
+        "TemplateVersion": { "type": "string", "minLength": 1 },
+        "Narrative": { "type": "string", "maxLength": 20000 },
+        "SelectedLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Media": { "type": "array", "items": { "$ref": "#/$defs/mediaReference" }, "maxItems": 20 },
+        "SyncState": { "$ref": "#/$defs/syncState" },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" },
+        "UpdatedAt": { "$ref": "#/$defs/timestamp" },
+        "RetryCount": { "type": "integer", "minimum": 0 },
+        "LastErrorCode": { "type": ["string", "null"] }
+      }
+    },
+    "thingEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "EventUUID",
+        "ThingUUID",
+        "TenantUUID",
+        "EventType",
+        "EffectiveAt",
+        "RecordedAt",
+        "RecordedByUserUUID",
+        "SourceType",
+        "ClientOperationID"
+      ],
+      "properties": {
+        "EventUUID": { "$ref": "#/$defs/uuid" },
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "EventType": {
+          "type": "string",
+          "enum": [
+            "CREATED",
+            "ACQUIRED",
+            "LOCATION_CHANGED",
+            "REPOTTED",
+            "BLOOM_STARTED",
+            "BLOOM_ENDED",
+            "TREATED",
+            "INSPECTED",
+            "FERTILIZED",
+            "WATERED",
+            "DIVIDED",
+            "IDENTIFICATION_CHANGED",
+            "LABEL_PRINTED",
+            "ARCHIVED",
+            "RESTORED",
+            "GENERAL_NOTE"
+          ]
+        },
+        "EffectiveAt": { "$ref": "#/$defs/timestamp" },
+        "RecordedAt": { "$ref": "#/$defs/timestamp" },
+        "RecordedByUserUUID": { "$ref": "#/$defs/uuid" },
+        "SourceType": { "type": "string", "enum": ["USER", "SYSTEM", "IMPORT", "AI_CONFIRMED"] },
+        "Narrative": { "type": ["string", "null"], "maxLength": 20000 },
+        "StructuredDetails": { "type": "object" },
+        "PriorState": { "type": ["object", "null"] },
+        "ResultingState": { "type": ["object", "null"] },
+        "ClientOperationID": { "$ref": "#/$defs/uuid" },
+        "SupersedesEventUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] }
+      }
+    }
+  }
+}
