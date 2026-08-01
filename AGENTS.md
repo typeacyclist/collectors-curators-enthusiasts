@@ -12,7 +12,7 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 - AI permission classes are `READ_ONLY` and `PROPOSE`. AI receives no direct canonical write capability.
 - Consequential actions require deterministic authorization, validation, and user confirmation.
 - Private is the default sharing state.
-- Tenant isolation is mandatory for every query, command, file path, and AI request.
+- Tenant isolation is mandatory for every query, command, batch, file path, print job, export, and AI request.
 - Original evidence must be preserved when normalized or interpreted information is created.
 - Important changes must be reversible or represented through append-oriented history.
 
@@ -30,6 +30,17 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 - Commands must include `ClientOperationID`, `ExpectedVersion`, `ThingUUID`, `TenantUUID`, and actor identity.
 - Trusted command handlers must use transactional deduplication and version checks.
 - Do not rely solely on browser background sync or Firestore last-write-wins behavior.
+- Optional local recovery snapshots must not be described as eliminating data-loss risk.
+- Recovery snapshots containing sensitive information require platform protection or application encryption and validated import logic.
+
+## Batch workflows
+
+- A batch is an orchestration and presentation boundary; every Thing, draft, command, event, and review decision retains item-level identity and auditability.
+- Do not implement a large batch as one all-or-nothing Firestore transaction.
+- Process batch commands through the standard item-level transactional operation ledger using bounded concurrency and configurable chunk sizes.
+- Return item-level results and permit retry of failed items without replaying successful operations.
+- Bulk approval is limited to allowlisted low-consequence fields with no evidence conflicts and successful deterministic validation.
+- AI confidence alone must never authorize bulk changes to location, privacy, publication, tenant membership, sale or transfer state, archive state, or confirmed identity.
 
 ## AI development
 
@@ -39,6 +50,16 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 - Preserve uncertainty and conflicts.
 - Never claim external verification without an approved authoritative source.
 - Test adversarial narratives and OCR prompt-injection content.
+- Prefer deterministic taxonomy cache matches before AI, but retain source and cache-version provenance.
+- Do not represent a fuzzy or cached match as authoritative verification unless the source supports that status.
+
+## Media and FinOps
+
+- Generate configurable display, AI, OCR-region, and thumbnail derivatives where device capability permits.
+- Preserve processing metadata and retain original evidence according to tenant policy.
+- Do not hardcode example image dimensions as permanent architecture limits.
+- Use application-level quotas, rate limits, duplicate detection, caching, and model routing.
+- Treat performance and cost-reduction percentages as hypotheses until measured with representative workflows.
 
 ## Mobile development
 
@@ -47,6 +68,15 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 - Preserve local drafts across application suspension.
 - Dense tables must become cards or stacked views on small screens.
 - Printing must use the `LabelService` abstraction; do not hardcode a printer protocol.
+- Batch printing must use a `PrintQueue` and distinguish print request from confirmed physical output.
+
+## Tenant authorization
+
+- Every canonical operation must resolve an explicit tenant boundary.
+- Firestore and Storage Rules must validate tenant access.
+- Trusted commands must validate current server-side membership and role.
+- JWT custom claims may support coarse platform roles or routing but must not be the sole source of dynamic tenant membership authorization.
+- A batch request may contain operations for only one tenant.
 
 ## Required validation
 
@@ -58,8 +88,13 @@ Before merging implementation changes, run the applicable checks:
 - Firestore and Storage Security Rules tests
 - Tenant-isolation tests
 - Idempotency and conflict tests
+- Partial batch success and retry tests
+- Bulk-approval allowlist and conflict tests
+- Print queue reconciliation tests
+- Local draft recovery and import tests
 - Mobile viewport and accessibility tests
 - AI golden-set evaluations
+- Media derivative and metadata tests
 - Secret scanning
 
 ## Repository constraints
