@@ -4,6 +4,12 @@
 
 The repository document `CCE Solution Governance and Experience Guidelines - AUTHORITATIVE.md` is the authoritative product-governance standard. Architecture and implementation documents must conform to it and must not silently weaken privacy, evidence, confirmation, accessibility, or user-control requirements.
 
+## Architecture status
+
+- The runtime target is the Firebase-native serverless stack defined in ADR-001: a React/TypeScript PWA with Capacitor-compatible shells on Firebase Hosting, Firebase Authentication, App Check, Cloud Firestore with Security Rules, Cloud Storage, Cloud Functions written in TypeScript for trusted commands, and Genkit/Vertex AI for governed AI.
+- ADR-003 (`docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`) retires the FastAPI prototype under `cce-orchid-mvp/`. That code is reference-only and must not be deployed; its legacy `cloudbuild.yaml` has been removed.
+- `docs/CODE-REVIEW.md` records the review that prompted this decision.
+
 ## Product rules
 
 - CCE is mobile-first and must support iOS, Android, and desktop workflows.
@@ -101,4 +107,4 @@ Before merging implementation changes, run the applicable checks:
 
 - Do not commit credentials, service-account files, `.env` secrets, generated build output, virtual environments, or `node_modules`.
 - New collection types must extend versioned templates and shared contracts rather than hardcoding domain behavior throughout the application.
-- The archived FastAPI prototype is reference material only and is not the target runtime architecture.
+- The FastAPI application under `cce-orchid-mvp/` is a reference prototype only, not the target runtime and not to be deployed. See the Architecture status section and ADR-003.
