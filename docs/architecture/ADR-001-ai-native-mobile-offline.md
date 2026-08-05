@@ -103,7 +103,9 @@ Contracts and storage paths must support tenant export. Basic JSON/CSV export is
 
 ### Similarity
 
-Embeddings and similarity are post-MVP. Only approved public/platform projections are eligible. Embeddings are generated asynchronously and are removed or deactivated when discoverability is revoked.
+**Embedding-based** similarity is post-MVP. The MVP's Release 5 similar-orchid discovery (MVP Definition Section 18) is delivered through deterministic matching — normalized taxonomy and name comparison (genus, species epithet, grex, clonal epithet) over approved PLATFORM/PUBLIC shared projections — with the match reason shown to the user per Governance Section 12. *(Scope clarified 2026-08-05, resolving gap-analysis finding 59.)*
+
+For the later embedding-based capability: only approved public/platform projections are eligible, embeddings are generated asynchronously, and they are removed or deactivated when discoverability is revoked.
 
 ## Corrections to client feedback
 
