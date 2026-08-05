@@ -3,7 +3,7 @@
 - **Date:** 2026-08-05
 - **Scope:** every tracked document in the repository at the pre-scaffold foundation stage
 - **Purpose:** identify requirements that are **missing**, **underspecified**, or **contradictory** across the documentation set, before Firebase-native scaffolding begins
-- **Status of this document:** resolved 2026-08-05 — 71 of 75 findings resolved in the documents and contracts listed in the Resolution log below; 4 findings (5, 6, 13, 59) await a product decision. Detail sections below record the original analysis.
+- **Status of this document:** resolved 2026-08-05 — all 75 findings resolved in the documents and contracts listed in the Resolution log below (findings 5, 6, 13, 59 by product decision the same day). Detail sections below record the original analysis.
 
 ## Documents reviewed
 
@@ -96,15 +96,15 @@ Shorthand: **MVP Def** = `CCE  Orchid Enthusiasts MVP Definition - WORKING.md` �
 | 2 | Resolved — OPS §2 (CI deploy pipeline, rollback) |
 | 3 | Resolved — OPS §1 (dev/staging/prod projects) |
 | 4 | Resolved — MVP Def screens list + PRIV §1 (ToS, Privacy Policy, acceptance gate) |
-| 5 | **Decision pending** — search architecture (client-side index vs managed service vs defer full-text) |
-| 6 | **Decision pending** — public sign-up model; interim guard in ACCT §2 |
+| 5 | Resolved — **decision: client-side local search index**; ADR-004 + MVP Def §16 pointer |
+| 6 | Resolved — **decision: invite-only MVP** with public waitlist form; ACCT §2 + MVP Def screens note |
 | 7 | Resolved — MEAS §2 (performance budgets) |
 | 8 | Resolved — OPS §3 (scripted idempotent bootstrap) + MVP-PRIORITIES P0 scaffold item 11 |
 | 9 | Resolved — core `collection` def (copy-at-creation semantics) + MVP Def §5 (Archived collection removed) |
 | 10 | Resolved — batch `commandType` taxonomy + `commandEnvelope` + consequence classes |
 | 11 | Resolved — core `orchidTemplateData` + `TemplateData` on thing/draftThing |
 | 12 | Resolved — core `EventType` enum aligned; MVP Def §12 mapping note |
-| 13 | **Decision pending** — voice mechanism (device dictation vs platform transcription) |
+| 13 | Resolved — **decision: device-keyboard dictation only** (no audio reaches the platform); MVP Def §7 + Governance §5.2/§11.4 scoped |
 | 14 | Resolved — MEAS §4 ($100 provisional budget, alerts, quotas) |
 | 15 | Resolved — MEAS §1 (instrumentation map) + MVP-PRIORITIES P1 hardening item 7 |
 | 16 | Resolved — MVP-PRIORITIES P0 contracts item 7 (data-model design work item before Rules) |
@@ -150,7 +150,7 @@ Shorthand: **MVP Def** = `CCE  Orchid Enthusiasts MVP Definition - WORKING.md` �
 | 56 | Resolved — free text retained; deferral recorded in MVP Def §25 + ORCH §5 |
 | 57 | Resolved — MEAS §8 (AI never blocks intake; async fallback) |
 | 58 | Resolved — OPS §7 (PITR, media versioning, RPO/RTO, restore tests) |
-| 59 | **Decision pending** — similarity scope (deterministic matching in Release 5 vs move post-MVP) |
+| 59 | Resolved — **decision: deterministic taxonomy/name matching stays in Release 5**; embedding-based similarity post-MVP; ADR-001 Similarity amended + MVP Def §18 |
 | 60 | Resolved — ACCT §7 (sessions, revocation ≤1 h, sign-out safeguards) |
 | 61 | Resolved — MVP Def §17 (tenant public contact method) + ORCH §6 |
 | 62 | Resolved — core DraftThing.Narrative mapping comment (first timeline entry) |

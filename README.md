@@ -26,10 +26,12 @@ Use these documents in this order when implementation details conflict:
 2. `docs/architecture/ADR-001-ai-native-mobile-offline.md`
 3. `docs/architecture/ADR-002-batch-intake-finops.md`
 4. `docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`
-5. `CCE  Orchid Enthusiasts MVP Definition - WORKING.md`
-6. `packages/contracts/schemas/`
-7. `AGENTS.md`
-8. `MVP-PRIORITIES.md`
+5. `docs/architecture/ADR-004-client-side-search.md`
+6. `CCE  Orchid Enthusiasts MVP Definition - WORKING.md`
+7. `docs/requirements/` (account/tenant lifecycle, operations, privacy/legal, measurement/NFR, orchid domain)
+8. `packages/contracts/schemas/`
+9. `AGENTS.md`
+10. `MVP-PRIORITIES.md`
 
 `docs/CODE-REVIEW.md` provides the implementation-review checklist. `docs/REPOSITORY-AUDIT-2026-08-05.md` records the repository retirement review. `docs/MVP-REQUIREMENTS-GAP-ANALYSIS-2026-08-05.md` records the requirements gap analysis and its resolution log; the adopted requirements live under `docs/requirements/` (account/tenant lifecycle, operations and launch readiness, privacy/legal/compliance, measurement/acceptance/NFRs, orchid domain).
 
@@ -77,7 +79,8 @@ FastAPI, Cloud Run as the primary application host, and Cloud SQL/PostgreSQL as 
 │   ├── architecture/
 │   │   ├── ADR-001-ai-native-mobile-offline.md
 │   │   ├── ADR-002-batch-intake-finops.md
-│   │   └── ADR-003-retire-fastapi-adopt-firebase-native.md
+│   │   ├── ADR-003-retire-fastapi-adopt-firebase-native.md
+│   │   └── ADR-004-client-side-search.md
 │   └── requirements/
 │       ├── ACCOUNT-TENANT-LIFECYCLE.md
 │       ├── MEASUREMENT-ACCEPTANCE-NFR.md

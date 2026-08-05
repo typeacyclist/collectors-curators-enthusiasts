@@ -570,7 +570,7 @@ Example user narrative:
 
 > Bought from Andy for $34.44. Good price, but it needs some TLC. The label says Golden Elf Sundust.
 
-Voice input is transcribed. Only the transcript is retained.
+**Voice mechanism (decided 2026-08-05, gap-analysis finding 13):** MVP voice input uses the device keyboard's built-in dictation. Speech is converted to text by the operating system and arrives at the platform as ordinary typed input; no audio is ever transmitted to, processed by, or stored on the platform. Platform-side transcription (with the governance doc's audio-deletion rules) is a possible future enhancement, not part of the MVP.
 
 ## Step 4 — AI interpretation
 
@@ -979,6 +979,8 @@ AI-assisted natural-language search may support:
 
 > Show orchids without a confirmed name.
 
+Search executes against a client-side local index of the tenant's synchronized records (including narrative full-text), per **ADR-004** (`docs/architecture/ADR-004-client-side-search.md`); the AI natural-language layer translates queries into filters over that same index.
+
 ------
 
 # 17. Sharing
@@ -1019,6 +1021,8 @@ An orchid shared with status `FOR_SALE` displays the tenant's **public contact m
 
 When an orchid is shared at the PLATFORM or PUBLIC level, CCE may compare it with other shared orchids.
 
+The MVP mechanism is **deterministic taxonomy and name matching** (genus, species epithet, grex, clonal epithet) over shared orchids, with the match reason shown ("Similar because both records appear to be Cymbidium Golden Elf 'Sundust'"). Embedding-based similarity is post-MVP per ADR-001.
+
 Prompt:
 
 > We found similar orchids shared by other members. Would you like to see them?
@@ -1055,6 +1059,8 @@ For the first MVP, viewing similar shared orchids is sufficient. Direct member m
 9. Privacy Policy
 
 Account creation requires email verification before the account can create a tenant or accept a membership invitation. Password reset uses Firebase Authentication email-based reset sent from the platform's verified sending domain. Owner accounts are offered optional multi-factor authentication during pilot hardening.
+
+During the pilot, account creation is **invitation-only**: the Create Account screen completes only with a valid invitation link, and the public home page offers an interest/waitlist form instead of open sign-up (see `docs/requirements/ACCOUNT-TENANT-LIFECYCLE.md`). Shared and public orchid pages remain viewable without an account.
 
 ## Tenant application
 

@@ -249,7 +249,10 @@ Missing optional information should not block creation.
 
 Users may speak instead of typing.
 
-The workflow is:
+Voice input may be delivered through either mechanism:
+
+1. **Device dictation** — the operating system's keyboard dictation converts speech to text on or via the device; only text reaches CCE and no audio is ever transmitted to or stored by the platform. *This is the MVP mechanism (decided 2026-08-05).*
+2. **Platform transcription** — if CCE itself ever receives audio, the workflow is:
 
 ```text
 User speaks
@@ -259,7 +262,7 @@ User speaks
 → Temporary voice recording is deleted
 ```
 
-CCE retains the transcript, not the voice recording.
+Under either mechanism, CCE retains the transcript, not the voice recording.
 
 The platform should not create or retain voice biometric profiles.
 
@@ -724,6 +727,8 @@ Examples:
 Voice audio should be temporary and deleted after transcription.
 
 Only the transcript is retained.
+
+When voice input uses device dictation (the MVP mechanism, Section 5.2), no audio reaches the platform and this rule is satisfied by construction; it binds any future platform-transcription feature.
 
 ## 11.5 AI privacy
 

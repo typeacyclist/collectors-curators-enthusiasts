@@ -14,9 +14,15 @@
 
 ## 2. Non-member accounts and public sign-up (finding 6)
 
-**Decision pending** (asked with the gap-analysis decision set): whether MVP sign-up is invite-only, open with a tenant-less welcome state, or self-serve tenant creation. Until the decision is recorded here, implementation must not build open sign-up flows beyond what the invitation flow requires.
+**Decision (2026-08-05): the MVP is invite-only.**
 
-Whatever the decision, the requirement stands that **every authenticated state has a defined screen**: no signed-in user may land on an undefined or blank state.
+- Account creation completes only through a valid invitation link (Section 5) or the platform bootstrap (Owner account). The Create Account screen exists but requires an invitation token; visiting it without one explains that Orchid Enthusiasts is in a private pilot.
+- The public home page presents the product plus an **interest form** (email address, optional note) instead of open sign-up; submissions go to the platform team as the waitlist for post-pilot expansion.
+- Public and shared orchid pages remain viewable without an account, per the sharing rules; nothing about invite-only restricts read access to explicitly shared content.
+- Consequence for PLATFORM sharing: during the pilot, "platform members" means invited users only. The similar-orchid discovery surface operates within that population.
+- Every authenticated state has a defined screen: no signed-in user may land on an undefined or blank state.
+
+Open sign-up (with a tenant-less welcome state) or self-serve tenant creation are post-pilot decisions, to be revisited with the multi-tenant commercialization plan.
 
 ## 3. Roles and permissions (finding 24)
 
