@@ -1,9 +1,0 @@
-{
-  "name": "Orchid Enthusiasts",
-  "short_name": "Orchids",
-  "start_url": "/app",
-  "display": "standalone",
-  "background_color": "#f6f8f9",
-  "theme_color": "#00827C",
-  "description": "CCE orchid collection management for Park City Orchids and More"
-}

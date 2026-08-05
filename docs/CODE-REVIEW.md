@@ -31,7 +31,7 @@ Reject new production-target work that assumes:
 - tenant identity can be inferred from a record identifier
 - AI output may directly modify canonical records
 
-Legacy files may remain temporarily for reference or migration mapping, but they must be marked non-authoritative and must not be extended as the target runtime.
+The former FastAPI prototype was removed from the active repository tree on 2026-08-05. Git history is the archive for migration mapping and historical comparison. Do not restore or extend that runtime as active production-target code.
 
 ## Current runtime expectations
 
@@ -130,7 +130,7 @@ Changes should align with:
 
 ## Migration review
 
-When translating legacy FastAPI or PostgreSQL behavior:
+When translating behavior found in Git history from the former FastAPI or PostgreSQL implementation:
 
 1. Identify the business requirement independently of the old framework.
 2. Map the behavior to a current JSON Schema contract.
@@ -138,7 +138,7 @@ When translating legacy FastAPI or PostgreSQL behavior:
 4. Preserve stable identifiers, narratives, evidence, lifecycle history, and tenant boundaries.
 5. Replace database-specific assumptions with Firestore-aware access patterns.
 6. Add emulator and tenant-isolation tests before considering the migration complete.
-7. Archive obsolete deployment files after equivalent Firebase behavior is verified.
+7. Do not copy retired deployment, session, authentication, ORM, or server-rendering mechanisms into the active runtime.
 
 ## Required validation before merge
 
