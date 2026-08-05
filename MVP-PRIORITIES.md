@@ -46,7 +46,7 @@ This work replaces the earlier Cloud Run, Cloud SQL, and Alembic deployment plan
 9. Add callable command foundations with operation-ledger deduplication, `ExpectedVersion` checks, tenant validation, accession allocation, and lifecycle events.
 10. Configure Firebase Hosting and `orchid-enthusiasts.com` HTTPS routing after local and emulator validation.
 11. Add the scripted, idempotent, audited production bootstrap (platform administrator, PCO tenant, Owner membership, tenant settings, recommended locations and collections, accession sequence) per `docs/requirements/OPERATIONS-LAUNCH-READINESS.md`. Direct console mutation of canonical documents is prohibited.
-12. Stand up the dev/staging/prod Firebase project structure and CI deployment pipeline per `docs/requirements/OPERATIONS-LAUNCH-READINESS.md`.
+12. Stand up the stage/prod Firebase project structure and CI deployment pipeline per `docs/requirements/OPERATIONS-LAUNCH-READINESS.md`.
 
 ## P1 - First usable Firebase-native vertical slice
 

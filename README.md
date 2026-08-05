@@ -81,6 +81,8 @@ FastAPI, Cloud Run as the primary application host, and Cloud SQL/PostgreSQL as 
 │   │   ├── ADR-002-batch-intake-finops.md
 │   │   ├── ADR-003-retire-fastapi-adopt-firebase-native.md
 │   │   └── ADR-004-client-side-search.md
+│   ├── mockups/
+│   │   └── mvp-screens.html
 │   └── requirements/
 │       ├── ACCOUNT-TENANT-LIFECYCLE.md
 │       ├── MEASUREMENT-ACCEPTANCE-NFR.md

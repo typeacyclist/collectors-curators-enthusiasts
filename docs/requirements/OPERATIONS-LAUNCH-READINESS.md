@@ -5,12 +5,12 @@
 
 ## 1. Environments (finding 3)
 
-Three separate Firebase projects: **dev**, **staging**, **prod**.
+Two separate Firebase projects: **stage**, **prod**. *(Reduced from three on 2026-08-06 — an MVP scope decision; a dedicated dev project can be added post-pilot if emulator-based development proves insufficient.)*
 
-- Local development uses the Emulator Suite against the dev project configuration.
-- Staging mirrors prod configuration (Rules, App Check, functions regions) and hosts pre-release validation, bootstrap rehearsal, and device QA.
+- Local development uses the Firebase Emulator Suite exclusively; no dev cloud project exists. Anything the emulators cannot exercise (App Check, Vertex AI, real device QA) is developed and verified against **stage**.
+- Stage mirrors prod configuration (Rules, App Check, functions regions) and hosts pre-release validation, bootstrap rehearsal, device QA, and scale testing. Stage data is disposable.
 - Prod contains only real tenant data; no test data, no console experimentation.
-- Vertex AI, Storage, and Firestore regions are pinned per project and identical across staging and prod (`us-central1` unless the privacy doc's residency requirement dictates otherwise).
+- Vertex AI, Storage, and Firestore regions are pinned per project and identical across stage and prod (`us-central1` unless the privacy doc's residency requirement dictates otherwise).
 
 ## 2. Deployment pipeline and rollback (finding 2)
 

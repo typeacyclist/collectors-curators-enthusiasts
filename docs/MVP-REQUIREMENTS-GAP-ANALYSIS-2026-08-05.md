@@ -94,7 +94,7 @@ Shorthand: **MVP Def** = `CCE  Orchid Enthusiasts MVP Definition - WORKING.md` �
 |---:|---|
 | 1 | Resolved — MVP Def screens list (reset, verification, account settings) + ACCT §1 |
 | 2 | Resolved — OPS §2 (CI deploy pipeline, rollback) |
-| 3 | Resolved — OPS §1 (dev/staging/prod projects) |
+| 3 | Resolved — OPS §1 (stage/prod projects; reduced from three 2026-08-06) |
 | 4 | Resolved — MVP Def screens list + PRIV §1 (ToS, Privacy Policy, acceptance gate) |
 | 5 | Resolved — **decision: client-side local search index**; ADR-004 + MVP Def §16 pointer |
 | 6 | Resolved — **decision: invite-only MVP** with public waitlist form; ACCT §2 + MVP Def screens note |

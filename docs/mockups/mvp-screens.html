@@ -1,0 +1,1072 @@
+<title>Orchid Enthusiasts — MVP Screen Mockups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ---------- viewer chrome (theme-aware) ---------- */
+:root{
+  --c-bg:#F2F0EB; --c-panel:#FFFFFF; --c-ink:#26302A; --c-mut:#6C7A6E;
+  --c-line:#DDDAD2; --c-acc:#3D5A3C; --c-acc2:#A64D79;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --c-bg:#191D1A; --c-panel:#222723; --c-ink:#E8EAE4; --c-mut:#93A095;
+         --c-line:#333A34; --c-acc:#9DB89A; --c-acc2:#D191B4; }
+}
+:root[data-theme="dark"]{ --c-bg:#191D1A; --c-panel:#222723; --c-ink:#E8EAE4; --c-mut:#93A095;
+         --c-line:#333A34; --c-acc:#9DB89A; --c-acc2:#D191B4; }
+:root[data-theme="light"]{ --c-bg:#F2F0EB; --c-panel:#FFFFFF; --c-ink:#26302A; --c-mut:#6C7A6E;
+         --c-line:#DDDAD2; --c-acc:#3D5A3C; --c-acc2:#A64D79; }
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--c-bg);color:var(--c-ink);
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{display:flex;gap:28px;max-width:1200px;margin:0 auto;padding:24px 20px 60px;align-items:flex-start}
+.rail{width:280px;flex:0 0 auto;position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto;
+  background:var(--c-panel);border:1px solid var(--c-line);border-radius:14px;padding:18px 14px}
+.rail h1{font:700 19px/1.25 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:0 0 2px;color:var(--c-acc)}
+.rail .sub{font-size:12.5px;color:var(--c-mut);margin:0 0 14px}
+.rail h2{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--c-mut);margin:16px 4px 6px}
+.rail button{display:flex;width:100%;text-align:left;background:none;border:0;border-radius:8px;
+  padding:7px 10px;font:inherit;font-size:13.5px;color:var(--c-ink);cursor:pointer;gap:8px;align-items:baseline}
+.rail button:hover{background:var(--c-bg)}
+.rail button.on{background:var(--c-acc);color:#fff}
+.rail button .n{font-size:10.5px;color:var(--c-mut);font-variant-numeric:tabular-nums;min-width:18px}
+.rail button.on .n{color:rgba(255,255,255,.7)}
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;min-width:0}
+.hint{font-size:12.5px;color:var(--c-mut);text-align:center;max-width:420px}
+.hint b{color:var(--c-ink)}
+kbd{border:1px solid var(--c-line);border-bottom-width:2px;border-radius:4px;padding:0 5px;font-size:11px;background:var(--c-panel)}
+@media (max-width:860px){ .wrap{flex-direction:column;align-items:center} .rail{position:static;width:100%;max-height:240px} }
+
+/* ---------- phone frame ---------- */
+.phone{width:400px;max-width:100%;height:822px;border-radius:46px;border:11px solid #171A17;
+  background:#FAF8F4;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(20,30,20,.28);flex:0 0 auto}
+.sbar{height:42px;flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;
+  padding:0 24px;font-size:13px;font-weight:600;color:#26302A;background:#FAF8F4}
+.sbar .pill-notch{width:110px;height:26px;background:#171A17;border-radius:14px;margin:0 auto;position:absolute;left:0;right:0;top:18px}
+.phone{position:relative}
+#screen{flex:1;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;background:#FAF8F4}
+#tabbar{flex:0 0 auto}
+
+/* ---------- app design system (deliberately light: greenhouse daylight) ---------- */
+.app{--paper:#FAF8F4;--card:#FFFFFF;--ink:#26302A;--mut:#66735F;--line:#E4E0D6;
+  --moss:#3D5A3C;--moss-soft:#E7EDE4;--orchid:#A64D79;--orchid-soft:#F5E7EE;
+  --quar:#B07C2F;--quar-soft:#F5EBDA;--sale:#2F6B8A;--sale-soft:#E2EEF3;--danger:#A63D3D;--danger-soft:#F5E2E2;
+  color:var(--ink);font-size:16px;line-height:1.45;display:flex;flex-direction:column;min-height:100%}
+.app .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.app .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+
+.hdr{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;padding:12px 16px;min-height:56px}
+.hdr .back{border:0;background:none;font-size:22px;line-height:1;color:var(--moss);cursor:pointer;padding:6px 8px;margin-left:-8px;border-radius:8px}
+.hdr .back:hover{background:var(--moss-soft)}
+.hdr h1{font-family:inherit;font-size:18px;line-height:1.25;font-weight:600;margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr .hact{border:0;background:none;color:var(--moss);font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:8px}
+.body{padding:16px;display:flex;flex-direction:column;gap:14px}
+.pad-b{padding-bottom:28px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card h3{margin:0 0 8px;font-size:15px}
+.tight{padding:6px 16px}
+.muted{color:var(--mut)} .small{font-size:13.5px} .xs{font-size:12.5px}
+.center{text-align:center}
+.row{display:flex;align-items:center;gap:12px}
+.row .grow{flex:1;min-width:0}
+.stack{display:flex;flex-direction:column;gap:10px}
+.hr{border:0;border-top:1px solid var(--line);margin:2px 0}
+
+.btn{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;min-height:48px;border-radius:12px;
+  font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;border:1.5px solid transparent;padding:10px 16px;text-align:center}
+.btn.primary{background:var(--moss);color:#fff}
+.btn.accent{background:var(--orchid);color:#fff}
+.btn.quiet{background:var(--card);border-color:var(--line);color:var(--ink)}
+.btn.ghost{background:none;color:var(--moss)}
+.btn.danger{background:none;border-color:var(--danger);color:var(--danger)}
+.btn.sm{min-height:40px;font-size:14.5px;width:auto;padding:6px 14px}
+.btnrow{display:flex;gap:10px}
+.btnrow .btn{flex:1}
+
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600}
+.b-active{background:var(--moss-soft);color:var(--moss)}
+.b-quar{background:var(--quar-soft);color:var(--quar)}
+.b-sale{background:var(--sale-soft);color:var(--sale)}
+.b-arch{background:#ECEAE3;color:#7A7668}
+.b-review{background:var(--orchid-soft);color:var(--orchid)}
+.b-res{background:var(--sale-soft);color:var(--sale)}
+.src{display:inline-block;border-radius:5px;padding:1px 7px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.s-user{background:var(--moss-soft);color:var(--moss)}
+.s-label{background:var(--sale-soft);color:var(--sale)}
+.s-ai{background:var(--orchid-soft);color:var(--orchid)}
+.s-unk{background:#ECEAE3;color:#7A7668}
+
+.ph{border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 auto}
+.ph svg{width:46%;height:46%;opacity:.85}
+.ph.g1{background:linear-gradient(140deg,#5C7B54,#33492F)}
+.ph.g2{background:linear-gradient(140deg,#A64D79,#5E2B46)}
+.ph.g3{background:linear-gradient(140deg,#B07C2F,#6E4C1B)}
+.ph.g4{background:linear-gradient(140deg,#2F6B8A,#1C3F53)}
+.ph.g5{background:linear-gradient(140deg,#7D6B9E,#453A5C)}
+.ph.g6{background:linear-gradient(140deg,#4E8578,#2A4A42)}
+
+.lrow{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:12px 14px;cursor:pointer}
+.lrow:hover{border-color:var(--moss)}
+.lrow .ph{width:56px;height:56px}
+.lrow h4{margin:0;font-size:15.5px}
+.lrow .sub{font-size:13px;color:var(--mut)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.chip{flex:0 0 auto;border:1.5px solid var(--line);background:var(--card);border-radius:999px;
+  padding:7px 14px;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);cursor:pointer}
+.chip.on{background:var(--moss);border-color:var(--moss);color:#fff}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:13.5px;font-weight:600}
+.field input,.field textarea,.field select{font-family:inherit;font-size:16px;color:var(--ink);background:var(--card);
+  border:1.5px solid var(--line);border-radius:10px;padding:12px;width:100%}
+.field textarea{min-height:110px;resize:none}
+.field .note{font-size:12.5px;color:var(--mut)}
+
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+.metric .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.metric .l{font-size:12.5px;color:var(--mut)}
+.metric.warn .v{color:var(--quar)} .metric.rev .v{color:var(--orchid)} .metric.sale .v{color:var(--sale)}
+
+.steps{display:flex;gap:5px;padding:12px 16px 0}
+.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--orchid)}
+.qbig{font:600 22px/1.3 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;margin:4px 0 2px}
+
+.tabs{display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--line);padding:0 8px;background:var(--paper);position:sticky;top:56px;z-index:4}
+.tabs button{flex:0 0 auto;border:0;background:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--mut);
+  padding:11px 11px;border-bottom:2.5px solid transparent;cursor:pointer}
+.tabs button.on{color:var(--moss);border-bottom-color:var(--orchid)}
+
+.tl{display:flex;flex-direction:column}
+.tl .ev{display:flex;gap:12px;padding:10px 0}
+.tl .ev + .ev{border-top:1px solid var(--line)}
+.tl .dot{width:10px;height:10px;border-radius:50%;background:var(--moss);margin-top:6px;flex:0 0 auto}
+.tl .dot.q{background:var(--quar)} .tl .dot.o{background:var(--orchid)} .tl .dot.s{background:var(--sale)}
+.tl .when{font-size:12.5px;color:var(--mut)}
+.tl h5{margin:0;font-size:15px}
+
+.tabbar{display:flex;border-top:1px solid #E4E0D6;background:#FFFFFF;padding:6px 4px 14px}
+.tabbar button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;
+  font-family:inherit;font-size:10.5px;font-weight:600;color:#66735F;cursor:pointer;padding:4px 0}
+.tabbar button.on{color:#3D5A3C}
+.tabbar .ico{font-size:21px;line-height:1}
+.tabbar .addbtn .ico{width:44px;height:44px;border-radius:50%;background:#A64D79;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:26px;margin-top:-18px;box-shadow:0 4px 10px rgba(166,77,121,.4)}
+
+.label-prev{background:#fff;border:1.5px dashed var(--mut);border-radius:6px;padding:14px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.label-prev .nm{font:600 15px/1.3 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+.qr{width:74px;height:74px;flex:0 0 auto;background:
+  repeating-linear-gradient(0deg,#26302A 0 4px,transparent 4px 8px),
+  repeating-linear-gradient(90deg,#26302A 0 4px,#fff 4px 8px);border:4px solid #fff;outline:1.5px solid #26302A}
+.qr.sm{width:54px;height:54px}
+
+.finder{position:relative;background:linear-gradient(160deg,#20291F,#0F140F);border-radius:14px;height:300px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.finder .frame{width:180px;height:180px;border-radius:18px;border:3px solid rgba(255,255,255,.9);
+  box-shadow:0 0 0 2000px rgba(0,0,0,.35)}
+.finder .scanline{position:absolute;width:180px;height:2.5px;background:var(--orchid);opacity:.9;animation:scan 2.2s ease-in-out infinite}
+@keyframes scan{0%,100%{transform:translateY(-80px)}50%{transform:translateY(80px)}}
+@media (prefers-reduced-motion: reduce){.finder .scanline{animation:none}}
+
+.tree{font-size:15px}
+.tree ul{list-style:none;margin:0;padding-left:20px;border-left:1.5px solid var(--line)}
+.tree > ul{padding-left:0;border-left:0}
+.tree li{padding:7px 0 0}
+.tree .nd{display:flex;align-items:center;gap:8px}
+.tree .cnt{margin-left:auto;font-size:12.5px;color:var(--mut);font-variant-numeric:tabular-nums}
+.tree .ic{font-size:15px}
+
+.aic{border-left:3px solid var(--orchid);background:var(--card);border-radius:0 12px 12px 0;padding:12px 14px}
+.notice{display:flex;gap:10px;background:var(--quar-soft);border-radius:12px;padding:12px 14px;font-size:14px}
+.notice.info{background:var(--sale-soft)}
+.notice.ok{background:var(--moss-soft)}
+.share-opt{display:flex;gap:12px;align-items:flex-start;padding:12px 4px;cursor:pointer}
+.share-opt + .share-opt{border-top:1px solid var(--line)}
+.radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--mut);flex:0 0 auto;margin-top:2px}
+.radio.on{border-color:var(--orchid);box-shadow:inset 0 0 0 5px var(--orchid)}
+.check{width:22px;height:22px;border-radius:6px;border:2px solid var(--mut);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+.check.on{background:var(--moss);border-color:var(--moss)}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14.5px}
+.kv dt{color:var(--mut)} .kv dd{margin:0}
+.wordmark{font:700 26px/1.15 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;color:var(--moss)}
+.wordmark .dot{color:var(--orchid)}
+a.lk{color:var(--moss);font-weight:600;text-decoration:none;cursor:pointer}
+</style>
+
+<div class="wrap">
+  <aside class="rail" id="rail">
+    <h1>Orchid Enthusiasts<span style="color:var(--c-acc2)">.</span></h1>
+    <p class="sub">High-fidelity MVP screen mockups · every screen in the MVP Definition §19, plus required states</p>
+  </aside>
+  <main class="stage">
+    <div class="phone">
+      <div class="pill-notch"></div>
+      <div class="sbar"><span>9:41</span><span>🌤 68°F &nbsp;📶 ▂▄▆ 🔋</span></div>
+      <div id="screen"></div>
+      <div id="tabbar"></div>
+    </div>
+    <p class="hint">Click any screen in the index, or navigate <b>inside the phone</b> — buttons, tabs, rows, and the tab bar are wired. <kbd>←</kbd> <kbd>→</kbd> step through screens.</p>
+  </main>
+</div>
+
+<script>
+/* ================= sample data ================= */
+const flower = (op=".85") => `<svg viewBox="0 0 100 100" aria-hidden="true" style="opacity:${op}">
+  <g fill="currentColor">
+    <ellipse cx="50" cy="26" rx="12" ry="20"/>
+    <ellipse cx="50" cy="74" rx="12" ry="20" transform="rotate(180 50 74)"/>
+    <ellipse cx="26" cy="50" rx="20" ry="12"/>
+    <ellipse cx="74" cy="50" rx="20" ry="12"/>
+    <circle cx="50" cy="50" r="11" fill="#FAF8F4" opacity=".9"/>
+    <circle cx="50" cy="50" r="5"/>
+  </g></svg>`;
+
+const ORCHIDS = [
+ {id:"o1", name:"Cymbidium Golden Elf ‘Sundust’", acc:"PCO-2026-0001", status:"ACTIVE", badge:"b-active", slabel:"Active",
+  loc:"Rack 1 / Shelf 2", coll:"Main Orchid Collection", ph:"g1", note:"Identification needs confirmation",
+  last:"Added July 30, 2026"},
+ {id:"o2", name:"Phalaenopsis ‘Moonlit Peak’", acc:"PCO-2026-0002", status:"ACTIVE", badge:"b-active", slabel:"Active",
+  loc:"Rack 2 / Shelf 1", coll:"Main Orchid Collection", ph:"g5", note:"", last:"Watered Aug 2, 2026"},
+ {id:"o3", name:"Paphiopedilum Maudiae", acc:"PCO-2026-0007", status:"QUARANTINE", badge:"b-quar", slabel:"Quarantine",
+  loc:"Quarantine Rack", coll:"Quarantine", ph:"g6", note:"In quarantine 34 days", last:"Inspected Jul 28, 2026"},
+ {id:"o4", name:"Cattleya Chocolate Drop ‘Kodama’", acc:"PCO-2026-0012", status:"FOR_SALE", badge:"b-sale", slabel:"For Sale",
+  loc:"Display Rack", coll:"For Sale", ph:"g2", note:"Listed at $65", last:"Listed Aug 1, 2026"},
+ {id:"o5", name:"Oncidium Twinkle (unconfirmed)", acc:"PCO-2026-0015", status:"ACTIVE", badge:"b-review", slabel:"Needs review",
+  loc:"Main Growing Area", coll:"Oakland Acquisition", ph:"g3", note:"AI summary awaiting your review", last:"Added Aug 4, 2026"},
+ {id:"o6", name:"Dendrobium kingianum", acc:"PCO-2025-0141", status:"ARCHIVED", badge:"b-arch", slabel:"Archived",
+  loc:"—", coll:"Main Orchid Collection", ph:"g4", note:"Archived Jan 2026 (gifted)", last:"Archived Jan 12, 2026"},
+];
+const O = ORCHIDS[0];
+
+/* ================= tiny component helpers ================= */
+const go = id => { location.hash = id; };
+const hdr = (title, back, act) => `
+  <header class="hdr">
+    ${back?`<button class="back" onclick="go('${back}')" aria-label="Back">‹</button>`:""}
+    <h1>${title}</h1>${act||""}
+  </header>`;
+const phimg = (cls,size=56) => `<div class="ph ${cls}" style="width:${size}px;height:${size}px">${flower()}</div>`;
+const orow = o => `
+  <div class="lrow" onclick="go('detail-overview')">
+    ${phimg(o.ph)}
+    <div class="grow">
+      <h4 class="serif">${o.name}</h4>
+      <div class="sub"><span class="mono">${o.acc}</span> · ${o.loc}</div>
+      ${o.note?`<div class="sub" style="color:var(--orchid)">${o.note}</div>`:""}
+    </div>
+    <span class="badge ${o.badge}">${o.slabel}</span>
+  </div>`;
+const steps = n => `<div class="steps">${[1,2,3,4,5,6,7].map(i=>`<i class="${i<=n?'on':''}"></i>`).join("")}</div>`;
+
+/* ================= screens ================= */
+const S = [];
+const def = (id, group, title, render, tab) => S.push({id, group, title, render, tab});
+
+/* ---------- PUBLIC & ACCOUNT ---------- */
+def("pub-home","Public & account","Home (invite-only)", () => `
+  ${""}
+  <div class="body pad-b" style="gap:18px">
+    <div class="center" style="padding-top:26px">
+      <div style="width:84px;height:84px;margin:0 auto 10px;border-radius:50%;background:var(--moss-soft);display:flex;align-items:center;justify-content:center;color:var(--moss)">${flower("1")}</div>
+      <div class="wordmark">Orchid Enthusiasts<span class="dot">.</span></div>
+      <p class="serif" style="font-size:19px;margin:10px 0 0">Every orchid has a story.<br>Keep yours — and find it again.</p>
+      <p class="muted small" style="margin:8px 0 0">Photograph a plant, tell its story in your own words, print a label, and scan it any time. Private by default.</p>
+    </div>
+    <button class="btn primary" onclick="go('pub-signin')">Sign in</button>
+    <div class="card">
+      <h3>Orchid Enthusiasts is in a private pilot</h3>
+      <p class="small muted" style="margin:0 0 10px">Creating an account currently requires an invitation. Leave your email and we’ll write when a spot opens.</p>
+      <div class="field"><input type="email" placeholder="you@example.com" aria-label="Email address"></div>
+      <div class="field" style="margin-top:8px"><input placeholder="Tell us about your collection (optional)"></div>
+      <button class="btn accent" style="margin-top:10px">Join the waitlist</button>
+    </div>
+    <p class="xs muted center"><a class="lk" onclick="go('pub-terms')">Terms of Service</a> · <a class="lk" onclick="go('pub-privacy')">Privacy Policy</a></p>
+  </div>`);
+
+def("pub-signin","Public & account","Sign in", () => `
+  ${hdr("Sign in","pub-home")}
+  <div class="body pad-b">
+    <div class="center" style="padding:10px 0 2px"><div class="wordmark" style="font-size:22px">Orchid Enthusiasts<span class="dot">.</span></div></div>
+    <div class="field"><label>Email</label><input type="email" value="rosa@pco-orchids.org"></div>
+    <div class="field"><label>Password</label><input type="password" value="••••••••••"></div>
+    <button class="btn primary" onclick="go('dashboard')">Sign in</button>
+    <button class="btn ghost" onclick="go('pub-forgot')">Forgot your password?</button>
+    <hr class="hr">
+    <p class="small muted center">Have an invitation? <a class="lk" onclick="go('pub-create')">Create your account</a></p>
+  </div>`);
+
+def("pub-create","Public & account","Create account (invited)", () => `
+  ${hdr("Create account","pub-signin")}
+  <div class="body pad-b">
+    <div class="notice ok"><span>✉️</span><div><b>You’re invited.</b><br><span class="small">Pat Okafor invited you to join <b>Pat’s Coastal Orchids</b> as an <b>Editor</b>. This invitation expires in 6 days.</span></div></div>
+    <div class="field"><label>Your name</label><input value="Rosa Vance"></div>
+    <div class="field"><label>Email</label><input type="email" value="rosa@pco-orchids.org"><span class="note">We’ll send a verification link before you can join the collection.</span></div>
+    <div class="field"><label>Password</label><input type="password" placeholder="At least 10 characters"></div>
+    <button class="btn primary">Create account</button>
+    <p class="xs muted">By continuing you confirm you are 18 or older and agree to the <a class="lk" onclick="go('pub-terms')">Terms</a> and <a class="lk" onclick="go('pub-privacy')">Privacy Policy</a>.</p>
+  </div>`);
+
+def("pub-create-no","Public & account","Create account (no invite)", () => `
+  ${hdr("Create account","pub-home")}
+  <div class="body pad-b">
+    <div class="center" style="padding-top:22px">
+      <div style="font-size:40px">🌱</div>
+      <p class="qbig">Orchid Enthusiasts is invite-only right now</p>
+      <p class="small muted">We’re running a private pilot with a small group of collectors. Accounts can only be created with an invitation link.</p>
+    </div>
+    <button class="btn accent" onclick="go('pub-home')">Join the waitlist</button>
+    <button class="btn quiet" onclick="go('pub-signin')">I already have an account</button>
+  </div>`);
+
+def("pub-forgot","Public & account","Forgot password", () => `
+  ${hdr("Reset password","pub-signin")}
+  <div class="body pad-b">
+    <p class="small muted">Enter the email you use for Orchid Enthusiasts and we’ll send a reset link.</p>
+    <div class="field"><label>Email</label><input type="email" value="rosa@pco-orchids.org"></div>
+    <button class="btn primary">Send reset link</button>
+    <div class="notice info"><span>✅</span><div class="small">Check your inbox — if that address has an account, a reset link is on its way. The link works for 1 hour.</div></div>
+  </div>`);
+
+def("pub-account","Public & account","Account settings", () => `
+  ${hdr("Account","dashboard")}
+  <div class="body pad-b">
+    <div class="card row">
+      <div class="ph g2" style="width:48px;height:48px;border-radius:50%">${flower()}</div>
+      <div class="grow"><b>Rosa Vance</b><div class="small muted">rosa@pco-orchids.org · Owner of Pat’s Coastal Orchids</div></div>
+    </div>
+    <div class="card tight stack" style="gap:0">
+      ${["Change password","Change email","Two-factor authentication (recommended for Owners)","Sign out of all devices"]
+        .map(t=>`<div class="row" style="padding:13px 0;border-bottom:1px solid var(--line)"><div class="grow">${t}</div><span class="muted">›</span></div>`).join("")}
+      <div class="row" style="padding:13px 0"><div class="grow">Sign out</div><span class="muted">›</span></div>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--danger)">Delete account</h3>
+      <p class="xs muted" style="margin:0 0 10px">Requests start a 30-day grace period you can cancel. As the sole Owner of a collection you’ll be asked to transfer or delete it first.</p>
+      <button class="btn danger sm">Request account deletion</button>
+    </div>
+  </div>`);
+
+def("pub-shared","Public & account","Shared orchid page", () => `
+  ${hdr("Shared by Pat’s Coastal Orchids")}
+  <div class="body pad-b">
+    <div class="ph g1" style="width:100%;height:210px">${flower()}</div>
+    <div>
+      <h2 class="serif" style="margin:0;font-size:23px">Cymbidium Golden Elf ‘Sundust’</h2>
+      <p class="small muted" style="margin:4px 0 0">Shared publicly · <span class="mono">PCO-2026-0001</span></p>
+    </div>
+    <div class="card">
+      <h3>About this orchid</h3>
+      <p class="small" style="margin:0">A compact, warmth-tolerant Cymbidium. Its keeper describes it as “a good price that needs some care.” Identification is based on the existing label and has not yet been independently confirmed.</p>
+    </div>
+    <div class="card">
+      <h3>What’s shown here</h3>
+      <p class="xs muted" style="margin:0">Exact location, purchase price, private notes, and personal contact details are never shown on shared pages.</p>
+    </div>
+    <button class="btn quiet sm" style="align-self:flex-start">⚑ Report this page</button>
+    <p class="xs muted center">Kept on <b>Orchid Enthusiasts</b> — every orchid has a story. <a class="lk" onclick="go('pub-home')">Learn more</a></p>
+  </div>`);
+
+def("pub-sale","Public & account","Shared page — For Sale", () => `
+  ${hdr("Shared by Pat’s Coastal Orchids")}
+  <div class="body pad-b">
+    <div class="ph g2" style="width:100%;height:210px">${flower()}</div>
+    <div class="row">
+      <div class="grow">
+        <h2 class="serif" style="margin:0;font-size:22px">Cattleya Chocolate Drop ‘Kodama’</h2>
+        <p class="small muted" style="margin:4px 0 0">Blooming size division · repotted spring 2026</p>
+      </div>
+      <span class="badge b-sale">For Sale · $65</span>
+    </div>
+    <div class="card">
+      <h3>Interested?</h3>
+      <p class="small" style="margin:0 0 10px">Pat’s Coastal Orchids handles sale inquiries at:</p>
+      <button class="btn primary sm">✉️ sales@pco-orchids.org</button>
+    </div>
+    <button class="btn quiet sm" style="align-self:flex-start">⚑ Report this page</button>
+  </div>`);
+
+def("pub-qr-private","Public & account","QR page — private / unknown", () => `
+  <div class="body pad-b" style="justify-content:center;flex:1">
+    <div class="center">
+      <div style="width:84px;height:84px;margin:0 auto 12px;border-radius:50%;background:var(--moss-soft);display:flex;align-items:center;justify-content:center;color:var(--moss)">${flower("1")}</div>
+      <p class="qbig">This label belongs to a private collection</p>
+      <p class="small muted">This plant is catalogued on Orchid Enthusiasts. Its record isn’t shared publicly. If it’s yours, sign in to open it.</p>
+    </div>
+    <button class="btn primary" onclick="go('pub-signin')">Sign in</button>
+    <button class="btn ghost" onclick="go('pub-home')">About Orchid Enthusiasts</button>
+    <p class="xs muted center">Private and unknown labels show this same page.</p>
+  </div>`);
+
+def("pub-qr-pending","Public & account","QR page — not yet activated", () => `
+  <div class="body pad-b" style="justify-content:center;flex:1">
+    <div class="center">
+      <div style="font-size:42px;margin-bottom:6px">⏳</div>
+      <p class="qbig">This label isn’t active yet</p>
+      <p class="small muted">Labels can be printed before a record finishes syncing. Once its collector’s device reconnects, scanning will open the record.</p>
+    </div>
+    <button class="btn primary" onclick="go('pub-signin')">Sign in</button>
+  </div>`);
+
+def("pub-terms","Public & account","Terms of Service", () => `
+  ${hdr("Terms of Service","pub-home")}
+  <div class="body pad-b small">
+    <p class="xs muted">Effective August 2026 · Pilot terms</p>
+    ${[["1. The service","Orchid Enthusiasts helps you catalogue and share plant collections. During the pilot, accounts are created by invitation only."],
+       ["2. Who may use it","You must be 18 or older. The service is not directed to children."],
+       ["3. Your content","Your records, photos, and stories are yours. We process them only to run the service, as the Privacy Policy describes. Sharing is always your explicit choice."],
+       ["4. Acceptable use","No unlawful content, no scraping other members’ shared pages, no misrepresenting plants you offer for sale."],
+       ["5. Takedowns","Report abuse or copyright concerns from any shared page or via abuse@orchid-enthusiasts.com. We acknowledge reports within 2 business days."],
+       ["6. Pilot service level","We target 99.5% monthly availability with support on business days. The pilot is provided as-is while we build."]]
+      .map(([h,t])=>`<div><b>${h}</b><p class="muted" style="margin:2px 0 0">${t}</p></div>`).join("")}
+  </div>`);
+
+def("pub-privacy","Public & account","Privacy Policy", () => `
+  ${hdr("Privacy Policy","pub-home")}
+  <div class="body pad-b small">
+    <p class="xs muted">Effective August 2026</p>
+    ${[["Private by default","Every record starts private. Nothing is visible beyond your collection until you explicitly share it — and you preview a shared page before publishing."],
+       ["What we collect","Your account details, the records, photos, and stories you add, and minimal product-usage events. No advertising trackers, ever."],
+       ["Photos","We strip camera metadata — including GPS location — from every image shown anywhere outside your private collection."],
+       ["AI processing","Your content is organized by AI under terms that prohibit training on it, processed in the US, with debug logs kept at most 90 days."],
+       ["Voice","Dictation happens on your device. Audio never reaches us — only the text you approve."],
+       ["Deletion","You can delete your account (30-day grace period). Data leaves backups within 35 days. History entries can be redacted for privacy on request."]]
+      .map(([h,t])=>`<div><b>${h}</b><p class="muted" style="margin:2px 0 0">${t}</p></div>`).join("")}
+  </div>`);
+
+/* ---------- TENANT CORE ---------- */
+def("dashboard","Tenant core","Tenant dashboard", () => `
+  ${hdr("Pat’s Coastal Orchids", null, `<button class="hact" onclick="go('pub-account')" aria-label="Account">👤</button>`)}
+  <div class="body pad-b">
+    <div class="notice"><span>⚠️</span><div class="small"><b>Paphiopedilum Maudiae</b> has been in quarantine 34 days (guideline: 30). <a class="lk" onclick="go('detail-overview')">Review it</a></div></div>
+    <div class="metrics">
+      <div class="metric" onclick="go('orchid-list')"><div class="v">247</div><div class="l">Total orchids</div></div>
+      <div class="metric" onclick="go('orchid-list')"><div class="v">12</div><div class="l">Added this month</div></div>
+      <div class="metric rev" onclick="go('orchid-list')"><div class="v">3</div><div class="l">Needing review</div></div>
+      <div class="metric warn" onclick="go('orchid-list')"><div class="v">4</div><div class="l">In quarantine</div></div>
+      <div class="metric sale" onclick="go('orchid-list')"><div class="v">6</div><div class="l">For sale</div></div>
+      <div class="metric" onclick="go('labels')"><div class="v">5</div><div class="l">Labels not yet printed</div></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn accent" onclick="go('add-1')">＋ Add Orchid</button>
+      <button class="btn primary" onclick="go('scan')">Scan</button>
+    </div>
+    <div class="btnrow">
+      <button class="btn quiet" onclick="go('labels')">Print Labels</button>
+      <button class="btn quiet" onclick="go('search')">Search</button>
+    </div>
+    <div class="card tight">
+      <h3 style="padding-top:8px">Recent activity</h3>
+      <div class="tl">
+        ${[["Today","Oncidium Twinkle — AI summary ready for review","o"],
+           ["Yesterday","Golden Elf ‘Sundust’ moved to Rack 1 / Shelf 2",""],
+           ["Aug 2","Moonlit Peak — watered and fertilized",""],
+           ["Aug 1","Chocolate Drop ‘Kodama’ listed for sale","s"]]
+          .map(([w,t,c])=>`<div class="ev"><div class="dot ${c}"></div><div><div class="when">${w}</div><h5 style="font-weight:500">${t}</h5></div></div>`).join("")}
+      </div>
+    </div>
+    <div class="row xs muted" style="justify-content:center;gap:16px">
+      <a class="lk" onclick="go('collections')">Collections</a><a class="lk" onclick="go('locations')">Locations</a><a class="lk" onclick="go('labels')">Labels</a><a class="lk" onclick="go('settings')">Settings</a>
+    </div>
+  </div>`, true);
+
+def("collections","Tenant core","Collections", () => `
+  ${hdr("Collections","dashboard",`<button class="hact">＋ New</button>`)}
+  <div class="body pad-b">
+    ${[["Main Orchid Collection","214 orchids · default sharing Private · default location Main Growing Area","g1"],
+       ["Oakland Acquisition","21 orchids · default sharing Private · default location Main Growing Area","g3"],
+       ["Quarantine","4 orchids · default sharing Private · default location Quarantine Area","g6"],
+       ["For Sale","6 orchids · default sharing Public listing · default location Display Rack","g2"]]
+      .map(([n,s,p])=>`<div class="lrow" onclick="go('orchid-list')">${phimg(p)}<div class="grow"><h4>${n}</h4><div class="sub">${s}</div></div><span class="muted">›</span></div>`).join("")}
+    <p class="xs muted">A collection is a logical group, not a place. Its defaults apply once, when an orchid is created — archiving is a status, so there’s no “archived” collection.</p>
+  </div>`, true);
+
+def("orchid-list","Tenant core","Orchid list", () => `
+  ${hdr("Orchids","dashboard",`<button class="hact" onclick="go('search')">🔍</button>`)}
+  <div class="body pad-b">
+    <div class="chips">
+      ${["All 247","Active","Quarantine 4","For sale 6","Needs review 3","Archived"].map((c,i)=>`<button class="chip ${i==0?'on':''}">${c}</button>`).join("")}
+    </div>
+    ${ORCHIDS.map(orow).join("")}
+  </div>`, true);
+
+def("scan","Tenant core","Scan", () => `
+  ${hdr("Scan a label","dashboard")}
+  <div class="body pad-b">
+    <div class="finder"><div class="frame"></div><div class="scanline"></div></div>
+    <p class="small muted center">Point at any Orchid Enthusiasts QR label. The plant’s regular phone camera works too.</p>
+    <div class="card row" onclick="go('detail-overview')" style="cursor:pointer">
+      ${phimg(O.ph,48)}
+      <div class="grow"><b class="serif">Golden Elf ‘Sundust’</b><div class="xs muted">Found just now — tap to open</div></div>
+      <span class="muted">›</span>
+    </div>
+    <button class="btn quiet" onclick="go('loc-update')">Scan a rack or shelf code instead</button>
+  </div>`, true);
+
+def("locations","Tenant core","Locations", () => `
+  ${hdr("Locations","dashboard",`<button class="hact">＋ New</button>`)}
+  <div class="body pad-b">
+    <div class="card tree">
+      <ul>
+        <li><div class="nd"><span class="ic">🏠</span><b>PCO Growing Facility</b><span class="cnt">247</span></div>
+          <ul>
+            <li><div class="nd"><span class="ic">🌿</span>Main Growing Area<span class="cnt">198</span></div>
+              <ul>
+                <li><div class="nd"><span class="ic">▤</span>Rack 1<span class="cnt">54</span></div>
+                  <ul><li><div class="nd">Shelf 1<span class="cnt">26</span></div></li>
+                      <li><div class="nd">Shelf 2 <span class="badge b-active" style="margin-left:6px">Golden Elf here</span><span class="cnt">28</span></div></li></ul></li>
+                <li><div class="nd"><span class="ic">▤</span>Rack 2<span class="cnt">61</span></div>
+                  <ul><li><div class="nd">Shelf 1<span class="cnt">30</span></div></li><li><div class="nd">Shelf 2<span class="cnt">31</span></div></li></ul></li>
+              </ul></li>
+            <li><div class="nd"><span class="ic">🚧</span>Quarantine Area<span class="cnt">4</span></div>
+              <ul><li><div class="nd">Quarantine Rack<span class="cnt">4</span></div></li></ul></li>
+            <li><div class="nd"><span class="ic">🌸</span>Flowering Area<span class="cnt">22</span></div>
+              <ul><li><div class="nd">Display Rack<span class="cnt">22</span></div></li></ul></li>
+            <li><div class="nd"><span class="ic">📦</span>Storage Area<span class="cnt">0</span></div></li>
+          </ul></li>
+      </ul>
+    </div>
+    <p class="xs muted">Spaces contain areas, racks, shelves, and optional slots. Locations are never created silently — every one is added on purpose.</p>
+  </div>`, true);
+
+def("labels","Tenant core","Labels & print queue", () => `
+  ${hdr("Labels","dashboard")}
+  <div class="body pad-b">
+    <div class="card">
+      <h3>Waiting to print · 5</h3>
+      <div class="stack">
+        ${[["Oncidium Twinkle (unconfirmed)","PCO-2026-0015",true],
+           ["Laelia anceps","PCO-2026-0016",true],
+           ["Golden Elf ‘Sundust’ — division","PCO-2026-0019",true],
+           ["Masdevallia veitchiana","PCO-2026-0017",false],
+           ["Vanda coerulea","PCO-2026-0018",false]]
+          .map(([n,a,on])=>`<div class="row"><span class="check ${on?'on':''}">${on?'✓':''}</span><div class="grow"><b class="small">${n}</b><div class="xs muted mono">${a}</div></div><span class="xs muted">1×4 in</span></div>`).join("")}
+      </div>
+      <button class="btn primary" style="margin-top:12px">Generate PDF — 3 labels</button>
+      <p class="xs muted center" style="margin:8px 0 0">Waterproof synthetic sheet stock · marks jobs “requested” until you confirm they printed</p>
+    </div>
+    <div class="card">
+      <h3>Label preview</h3>
+      <div class="label-prev">
+        <div><div class="nm">Cymbidium Golden Elf<br>‘Sundust’</div><div class="mono xs" style="margin-top:6px">PCO-2026-0001</div></div>
+        <div class="qr"></div>
+      </div>
+      <div class="row xs muted" style="justify-content:space-between;margin-top:8px"><span>Default label · 1×4 in</span><a class="lk">Compact label</a></div>
+    </div>
+    <div class="card tight">
+      <h3 style="padding-top:8px">Reprint history</h3>
+      <div class="tl">
+        ${[["Aug 1, 2026","Batch of 12 — confirmed printed"],["Jul 30, 2026","Golden Elf ‘Sundust’ — confirmed printed"]]
+          .map(([w,t])=>`<div class="ev"><div class="dot"></div><div><div class="when">${w}</div><h5 style="font-weight:500">${t}</h5></div></div>`).join("")}
+      </div>
+    </div>
+  </div>`, true);
+
+def("search","Tenant core","Search", () => `
+  ${hdr("Search","dashboard")}
+  <div class="body pad-b">
+    <div class="field"><input value="bought from Andy" aria-label="Search"></div>
+    <div class="aic">
+      <span class="src s-ai">AI</span>
+      <p class="small" style="margin:6px 0 0">Showing orchids whose story mentions buying from <b>Andy</b> — 2 matches in your 247 records.</p>
+    </div>
+    ${orow(ORCHIDS[0])}
+    ${orow(ORCHIDS[4])}
+    <div class="card">
+      <h3>Try searching for</h3>
+      <div class="chips" style="flex-wrap:wrap">
+        ${["Golden Elf","Needs TLC","Rack 1","For sale","Oakland","orchids without a confirmed name"].map(q=>`<button class="chip">${q}</button>`).join("")}
+      </div>
+      <p class="xs muted" style="margin:10px 0 0">Search covers names, accession numbers, stories, locations, status, and sources — and works offline on everything synced to this phone.</p>
+    </div>
+  </div>`, true);
+
+def("settings","Tenant core","Tenant settings", () => `
+  ${hdr("Tenant settings","dashboard")}
+  <div class="body pad-b">
+    <div class="card kv">
+      <dt>Tenant</dt><dd><b>Pat’s Coastal Orchids</b> (PCO)</dd>
+      <dt>Default privacy</dt><dd>Private</dd>
+      <dt>Currency</dt><dd>USD ($)</dd>
+      <dt>Time zone</dt><dd>America/Denver</dd>
+      <dt>Accession format</dt><dd class="mono">PCO-{YEAR}-{SEQ}</dd>
+      <dt>Next number</dt><dd class="mono">PCO-2026-0020</dd>
+    </div>
+    <div class="card tight stack" style="gap:0">
+      ${[["Members & invitations","3 members · 1 pending invite","settings-members"],
+         ["Collections","4 collections","collections"],
+         ["Locations","Facility tree","locations"],
+         ["Default label template","Default 1×4 in","labels"],
+         ["Public contact method","sales@pco-orchids.org — shown on For Sale pages",""],
+         ["AI assistance level","Standard — always review before saving",""]]
+        .map(([t,s,g])=>`<div class="row" style="padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer" ${g?`onclick="go('${g}')"`:""}><div class="grow"><b class="small">${t}</b><div class="xs muted">${s}</div></div><span class="muted">›</span></div>`).join("")}
+      <div class="row" style="padding:12px 0"><div class="grow"><b class="small">Subscription</b><div class="xs muted">Pilot — no subscription required</div></div><span class="muted">›</span></div>
+    </div>
+    <button class="btn quiet">Export collection (JSON / CSV)</button>
+  </div>`, true);
+
+def("settings-members","Tenant core","Members & invitations", () => `
+  ${hdr("Members","settings",`<button class="hact">＋ Invite</button>`)}
+  <div class="body pad-b">
+    <div class="card tight stack" style="gap:0">
+      ${[["Rosa Vance","rosa@pco-orchids.org","Owner"],["Pat Okafor","pat@pco-orchids.org","Editor"],["Sam Reyes","sam@pco-orchids.org","Viewer"]]
+        .map(([n,e,r])=>`<div class="row" style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="grow"><b class="small">${n}</b><div class="xs muted">${e}</div></div><span class="badge ${r==='Owner'?'b-review':'b-active'}">${r}</span></div>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Pending invitations</h3>
+      <div class="row"><div class="grow"><b class="small">jordan@leafmail.com</b><div class="xs muted">Editor · invited Aug 3 · expires in 5 days</div></div><button class="btn quiet sm">Revoke</button></div>
+    </div>
+    <p class="xs muted">Owners manage sharing, sales, transfers, and settings. Editors add and care for orchids. Viewers can look and ask, never change.</p>
+  </div>`, true);
+
+/* ---------- ADD ORCHID FLOW ---------- */
+def("add-1","Add orchid flow","Step 1 · Collection", () => `
+  ${hdr("Add an orchid","dashboard")}${steps(1)}
+  <div class="body pad-b">
+    <p class="qbig">Which collection is it joining?</p>
+    ${[["Main Orchid Collection","Most of the collection lives here","g1"],
+       ["Oakland Acquisition","The spring buying trip","g3"],
+       ["Quarantine","New arrivals settle in here first","g6"],
+       ["For Sale","Plants being offered on","g2"]]
+      .map(([n,s,p],i)=>`<div class="lrow" onclick="go('add-2')">${phimg(p,48)}<div class="grow"><h4>${n}</h4><div class="sub">${s}</div></div><span class="radio ${i==0?'on':''}"></span></div>`).join("")}
+    <p class="xs muted">The orchid template and the collection’s defaults come along automatically.</p>
+    <button class="btn accent" onclick="go('add-2')">Continue</button>
+  </div>`);
+
+def("add-2","Add orchid flow","Step 2 · Photos", () => `
+  ${hdr("Add an orchid","add-1")}${steps(2)}
+  <div class="body pad-b">
+    <p class="qbig">Take a few pictures of this orchid.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="ph g1" style="height:130px;position:relative">${flower()}<span class="badge b-active" style="position:absolute;left:8px;bottom:8px">Whole plant</span></div>
+      <div class="ph g2" style="height:130px;position:relative">${flower()}<span class="badge b-active" style="position:absolute;left:8px;bottom:8px">Flowers</span></div>
+      <div style="height:130px;border:2px dashed var(--mut);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mut);cursor:pointer"><span style="font-size:26px">📷</span><span class="xs">Existing tag</span></div>
+      <div style="height:130px;border:2px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mut);cursor:pointer"><span style="font-size:26px">＋</span><span class="xs">Roots or pot</span></div>
+    </div>
+    <p class="xs muted">One photo is plenty — none at all is fine too. Location data is stripped from anything ever shared.</p>
+    <button class="btn accent" onclick="go('add-3')">Continue</button>
+    <button class="btn ghost" onclick="go('add-3')">Skip photos</button>
+  </div>`);
+
+def("add-3","Add orchid flow","Step 3 · Tell the story", () => `
+  ${hdr("Add an orchid","add-2")}${steps(3)}
+  <div class="body pad-b">
+    <p class="qbig">Tell us about this orchid.</p>
+    <p class="small muted" style="margin-top:-6px">You can tell us what it is, where it came from, what you paid, how it’s doing, or anything else you want to remember.</p>
+    <div class="field">
+      <textarea aria-label="Your story">Bought from Andy for $34.44. Good price, but it needs some TLC. The label says Golden Elf Sundust.</textarea>
+      <span class="note">🎤 Tap the mic on your keyboard to dictate — your words stay on your phone until you save.</span>
+    </div>
+    <button class="btn accent" onclick="go('add-4')">Continue</button>
+    <button class="btn ghost" onclick="go('add-4')">Skip for now</button>
+  </div>`);
+
+def("add-4","Add orchid flow","Step 4 · AI interpretation", () => `
+  ${hdr("Add an orchid","add-3")}${steps(4)}
+  <div class="body pad-b">
+    <p class="qbig">Here’s how we’d organize that.</p>
+    <div class="stack">
+      ${[["Possible name","Cymbidium Golden Elf ‘Sundust’","s-label","From tag photo"],
+         ["Acquisition","Purchased from Andy","s-user","You said"],
+         ["Price","$34.44 USD","s-user","You said"],
+         ["Your assessment","Good price","s-user","You said"],
+         ["Condition","Needs some care","s-ai","Our reading of “needs TLC”"],
+         ["Identification","Based on the existing label — not yet verified","s-unk","Unverified"]]
+        .map(([k,v,c,s])=>`<div class="card" style="padding:11px 14px"><div class="row"><div class="grow"><div class="xs muted">${k}</div><b class="small">${v}</b></div><div style="text-align:right"><span class="src ${c}">${s}</span></div></div></div>`).join("")}
+    </div>
+    <p class="xs muted">Nothing is saved yet — you review everything first, and you can change any line.</p>
+    <button class="btn accent" onclick="go('add-5')">Looks good so far</button>
+  </div>`);
+
+def("add-5","Add orchid flow","Step 5 · One question", () => `
+  ${hdr("Add an orchid","add-4")}${steps(5)}
+  <div class="body pad-b" style="justify-content:center;flex:1">
+    <div class="aic">
+      <span class="src s-ai">One question</span>
+      <p class="qbig" style="margin-top:8px">Would you like to photograph the existing tag so we can check the name?</p>
+    </div>
+    <div class="stack">
+      <button class="btn primary">📷 Answer — photograph the tag</button>
+      <div class="btnrow">
+        <button class="btn quiet" onclick="go('add-6')">Skip</button>
+        <button class="btn quiet" onclick="go('add-6')">Not sure</button>
+      </div>
+      <button class="btn ghost" onclick="go('add-6')">Finish</button>
+    </div>
+  </div>`);
+
+def("add-6","Add orchid flow","Step 6 · Review", () => `
+  ${hdr("Add an orchid","add-5")}${steps(6)}
+  <div class="body pad-b">
+    <p class="qbig">Here is what we understood:</p>
+    <div class="card">
+      <div class="row" style="align-items:flex-start">
+        ${phimg("g1",64)}
+        <div class="grow">
+          <b class="serif" style="font-size:17px">Cymbidium Golden Elf ‘Sundust’</b>
+          <p class="small" style="margin:6px 0 0">Purchased from Andy for $34.44. You described it as a good price that needs some care.</p>
+        </div>
+      </div>
+      <hr class="hr" style="margin:10px 0">
+      <div class="row small"><span class="muted grow">Identification</span><span class="badge b-review">Needs confirmation</span></div>
+      <div class="row small" style="margin-top:6px"><span class="muted grow">Collection</span><span>Main Orchid Collection</span></div>
+      <div class="row small" style="margin-top:6px"><span class="muted grow">Sharing</span><span>Private (default)</span></div>
+    </div>
+    <button class="btn accent" onclick="go('add-7')">Looks Right</button>
+    <button class="btn quiet" onclick="go('add-4')">Change Something</button>
+  </div>`);
+
+def("add-7","Add orchid flow","Step 7 · Saved", () => `
+  ${steps(7)}
+  <div class="body pad-b" style="justify-content:center;flex:1">
+    <div class="center">
+      <div style="width:88px;height:88px;margin:0 auto 12px;border-radius:50%;background:var(--moss-soft);display:flex;align-items:center;justify-content:center;font-size:42px">✓</div>
+      <p class="qbig">Your orchid has been added.</p>
+      <p class="small muted">Golden Elf ‘Sundust’ is now <span class="mono">PCO-2026-0001</span> in Main Orchid Collection.</p>
+    </div>
+    <div class="stack">
+      <button class="btn primary" onclick="go('detail-label')">🏷 Print Label</button>
+      <button class="btn accent" onclick="go('add-1')">＋ Add Another Orchid</button>
+      <button class="btn quiet" onclick="go('detail-overview')">View Orchid</button>
+    </div>
+  </div>`);
+
+/* ---------- ORCHID DETAIL (8 tabs) ---------- */
+const TABS = [["detail-overview","Overview"],["detail-story","Story"],["detail-photos","Photos"],["detail-history","History"],
+              ["detail-location","Location"],["detail-label","Label"],["detail-sharing","Sharing"],["detail-more","More Details"]];
+const tabbarD = cur => `<div class="tabs">${TABS.map(([id,t])=>`<button class="${id===cur?'on':''}" onclick="go('${id}')">${t}</button>`).join("")}</div>`;
+const dhdr = cur => hdr("Golden Elf ‘Sundust’","orchid-list") + tabbarD(cur);
+
+def("detail-overview","Orchid detail","Detail · Overview", () => `
+  ${dhdr("detail-overview")}
+  <div class="body pad-b">
+    <div class="ph g1" style="width:100%;height:190px">${flower()}</div>
+    <div>
+      <h2 class="serif" style="margin:0;font-size:22px">Cymbidium Golden Elf ‘Sundust’</h2>
+      <div class="row" style="margin-top:6px;gap:8px"><span class="mono small muted">PCO-2026-0001</span><span class="badge b-active">Active</span><span class="badge b-review">ID needs confirmation</span></div>
+    </div>
+    <div class="card kv">
+      <dt>Location</dt><dd>Rack 1 / Shelf 2</dd>
+      <dt>Collection</dt><dd>Main Orchid Collection</dd>
+      <dt>Acquired</dt><dd>July 30, 2026 · from Andy · $34.44</dd>
+      <dt>Last activity</dt><dd>Moved yesterday</dd>
+    </div>
+    <button class="btn accent" onclick="go('tell-me')">✦ Tell Me About This Orchid</button>
+    <div class="btnrow">
+      <button class="btn quiet" onclick="go('event-add')">Record Care</button>
+      <button class="btn quiet" onclick="go('loc-update')">Update Location</button>
+    </div>
+    <div class="btnrow">
+      <button class="btn quiet" onclick="go('detail-story')">Add Information</button>
+      <button class="btn quiet" onclick="go('detail-label')">Print Label</button>
+    </div>
+  </div>`, true);
+
+def("detail-story","Orchid detail","Detail · Story", () => `
+  ${dhdr("detail-story")}
+  <div class="body pad-b">
+    <div class="card tl">
+      ${[["July 30, 2026 · Rosa","Bought from Andy for $34.44. Good price, but it needs some TLC.",""],
+         ["August 3, 2026 · Rosa","Andy said the plant originally came from a nursery in California.",""],
+         ["February 12, 2027 · Pat","It produced two flower spikes.","o"]]
+        .map(([w,t,c])=>`<div class="ev"><div class="dot ${c}"></div><div class="grow"><div class="when">${w}</div><p class="small" style="margin:2px 0 0">${t}</p><div class="xs" style="margin-top:4px"><a class="lk">Edit</a> · <a class="lk">Remove</a></div></div></div>`).join("")}
+    </div>
+    <div class="field"><textarea placeholder="Add to this orchid’s story…" style="min-height:76px"></textarea></div>
+    <button class="btn primary">Add to story</button>
+    <p class="xs muted">Stories are never overwritten — corrections append, and removed entries can be restored.</p>
+  </div>`, true);
+
+def("detail-photos","Orchid detail","Detail · Photos", () => `
+  ${dhdr("detail-photos")}
+  <div class="body pad-b">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${[["g1","Whole plant · ★ primary"],["g2","Flower"],["g3","Label"],["g6","Roots"]]
+        .map(([p,c])=>`<figure style="margin:0"><div class="ph ${p}" style="width:100%;height:130px">${flower()}</div><figcaption class="xs muted" style="margin-top:4px">${c}</figcaption></figure>`).join("")}
+    </div>
+    <div class="btnrow">
+      <button class="btn primary">📷 Take photo</button>
+      <button class="btn quiet">Upload</button>
+    </div>
+    <p class="xs muted">Rotate, crop, caption, and set visibility per photo. Originals are always kept; location metadata never leaves your collection.</p>
+  </div>`, true);
+
+def("detail-history","Orchid detail","Detail · History", () => `
+  ${dhdr("detail-history")}
+  <div class="body pad-b">
+    <div class="card tl">
+      ${[["Aug 4, 2026","Moved","To Rack 1 / Shelf 2 — “making room on Rack 2”",""],
+         ["Aug 2, 2026","Watered","Routine watering, rack pass","" ],
+         ["Jul 31, 2026","Label printed","Default 1×4 in label, confirmed","s"],
+         ["Jul 30, 2026","Repotted","Medium bark; several dead roots removed","o"],
+         ["Jul 30, 2026","Acquired","From Andy · $34.44 · “sometime in July” (month-level date)","q"],
+         ["Jul 30, 2026","Created","Added by Rosa from the intake flow",""]]
+        .map(([w,h,t,c])=>`<div class="ev"><div class="dot ${c}"></div><div><div class="when">${w}</div><h5>${h}</h5><p class="xs muted" style="margin:2px 0 0">${t}</p></div></div>`).join("")}
+    </div>
+    <button class="btn primary" onclick="go('event-add')">＋ What happened with this orchid?</button>
+  </div>`, true);
+
+def("detail-location","Orchid detail","Detail · Location", () => `
+  ${dhdr("detail-location")}
+  <div class="body pad-b">
+    <div class="card center" style="padding:20px">
+      <div class="xs muted" style="letter-spacing:.08em;text-transform:uppercase">Current location</div>
+      <p class="qbig" style="margin:6px 0 2px">Rack 1 · Shelf 2</p>
+      <p class="small muted" style="margin:0">Main Growing Area · PCO Growing Facility</p>
+    </div>
+    <button class="btn accent" onclick="go('loc-update')">Where is this orchid now?</button>
+    <div class="card tl">
+      <h3>Location history</h3>
+      ${[["Aug 4, 2026","Rack 1 / Shelf 2 — moved by Rosa"],["Jul 30, 2026","Rack 2 / Shelf 1 — placed at intake"]]
+        .map(([w,t])=>`<div class="ev"><div class="dot"></div><div><div class="when">${w}</div><h5 style="font-weight:500">${t}</h5></div></div>`).join("")}
+    </div>
+  </div>`, true);
+
+def("detail-label","Orchid detail","Detail · Label", () => `
+  ${dhdr("detail-label")}
+  <div class="body pad-b">
+    <div class="card">
+      <div class="label-prev">
+        <div><div class="nm">Cymbidium Golden Elf<br>‘Sundust’</div><div class="mono xs" style="margin-top:6px">PCO-2026-0001</div></div>
+        <div class="qr"></div>
+      </div>
+      <div class="row xs muted" style="justify-content:space-between;margin-top:8px"><span>Default label · 1×4 in · QR ≥ 0.6 in</span><a class="lk">Switch to compact</a></div>
+    </div>
+    <button class="btn primary">Generate PDF</button>
+    <button class="btn quiet" onclick="go('labels')">Add to print queue</button>
+    <div class="notice ok"><span>♾️</span><div class="xs">This QR stays valid forever — through renames, moves, sales, transfers, and archiving. It opens <span class="mono">orchid-enthusiasts.com/p/…</span></div></div>
+    <div class="card tight">
+      <h3 style="padding-top:8px">Print history</h3>
+      <div class="tl"><div class="ev"><div class="dot s"></div><div><div class="when">Jul 31, 2026</div><h5 style="font-weight:500">Printed and confirmed by Rosa</h5></div></div></div>
+    </div>
+  </div>`, true);
+
+def("detail-sharing","Orchid detail","Detail · Sharing", () => `
+  ${dhdr("detail-sharing")}
+  <div class="body pad-b">
+    <div class="card">
+      ${[["Private","Only members of Pat’s Coastal Orchids",true],
+         ["Collection members","Everyone in your tenant — same as private for now",false],
+         ["Platform members","Other invited Orchid Enthusiasts members",false],
+         ["Anyone with a link","A revocable link you can send to one person",false],
+         ["Public","Anyone who scans or finds the page",false]]
+        .map(([t,s,on])=>`<div class="share-opt"><span class="radio ${on?'on':''}"></span><div><b class="small">${t}</b><div class="xs muted">${s}</div></div></div>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Never shown when shared</h3>
+      <p class="xs muted" style="margin:0">Exact location · purchase price · private valuation · internal notes · personal contact info</p>
+    </div>
+    <button class="btn quiet" onclick="go('pub-shared')">Preview the shared page</button>
+    <button class="btn accent" disabled style="opacity:.5">Publish — choose a level first</button>
+    <p class="xs muted center">Sharing is always an explicit choice. You can take a page down at any time.</p>
+  </div>`, true);
+
+def("detail-more","Orchid detail","Detail · More Details", () => `
+  ${dhdr("detail-more")}
+  <div class="body pad-b">
+    <p class="xs muted">Power-user view — the standard overview is all most members ever need.</p>
+    <div class="card kv xs">
+      <dt>ThingUUID</dt><dd class="mono">6f2a…9c41</dd>
+      <dt>LabelID</dt><dd class="mono">qL7xPk9mZa2R</dd>
+      <dt>Accession</dt><dd class="mono">PCO-2026-0001</dd>
+      <dt>Template</dt><dd>orchid · v1.3</dd>
+      <dt>Record version</dt><dd class="mono">7</dd>
+      <dt>Created</dt><dd>Jul 30, 2026 · Rosa · offline, synced 14:02</dd>
+    </div>
+    <div class="card">
+      <h3>Botanical name</h3>
+      <div class="kv small">
+        <dt>Genus</dt><dd>Cymbidium</dd>
+        <dt>Grex</dt><dd>Golden Elf</dd>
+        <dt>Clonal epithet</dt><dd>‘Sundust’</dd>
+        <dt>As entered</dt><dd>“Golden Elf Sundust”</dd>
+        <dt>Verification</dt><dd><span class="badge b-review">Label-based, unverified</span></dd>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Divisions</h3>
+      <p class="small" style="margin:0">1 division recorded — <a class="lk">PCO-2026-0019</a>, created Aug 4, 2026</p>
+    </div>
+    <button class="btn quiet">Archive this orchid</button>
+    <p class="xs muted center">Archiving hides it from everyday lists but keeps everything. Permanent deletion is Owner-only, for records added in error.</p>
+  </div>`, true);
+
+/* ---------- AI & FLOWS ---------- */
+def("tell-me","AI & flows","Tell Me About This Orchid", () => `
+  ${hdr("Tell me about this orchid","detail-overview")}
+  <div class="body pad-b">
+    <div class="row" style="gap:10px">${phimg("g1",44)}<div><b class="serif">Golden Elf ‘Sundust’</b><div class="xs muted mono">PCO-2026-0001</div></div></div>
+    <div class="aic">
+      <p class="small" style="margin:0">This appears to be a <b>Cymbidium Golden Elf ‘Sundust’</b>. PCO acquired it from Andy for $34.44. The original narrative describes it as a good purchase that needs some care. Its identification is based on the existing label and has not yet been independently confirmed. It is currently assigned to Rack 1, Shelf 2. No repotting history has been recorded since July.</p>
+    </div>
+    <div class="legend">
+      <span class="src s-user">User stated</span><span class="src s-label">Confirmed</span><span class="src s-ai">AI inferred</span><span class="src s-unk">Unknown</span>
+    </div>
+    <div class="card">
+      <h3>Suggested next steps</h3>
+      <div class="stack">
+        <button class="btn quiet sm" onclick="go('detail-story')">Add more information</button>
+        <button class="btn quiet sm" onclick="go('care')">Care instructions</button>
+        <button class="btn quiet sm" onclick="go('care')">How should I repot it?</button>
+        <button class="btn quiet sm" onclick="go('loc-update')">Update location</button>
+        <button class="btn quiet sm" onclick="go('event-add')">Record maintenance</button>
+      </div>
+    </div>
+    <p class="xs muted center">Asking never changes the record.</p>
+  </div>`, true);
+
+def("care","AI & flows","Care & guidance", () => `
+  ${hdr("Care guidance","tell-me")}
+  <div class="body pad-b">
+    <div class="chips">
+      ${["Best care instructions","How should I pot it?","What may be wrong?"].map((q,i)=>`<button class="chip ${i==0?'on':''}">${q}</button>`).join("")}
+    </div>
+    <div class="aic">
+      <p class="small" style="margin:0 0 8px"><b>What we know:</b> you described it as needing some TLC, it was repotted July 30 in medium bark with dead roots removed, and it sits in your Main Growing Area.</p>
+      <p class="small" style="margin:0 0 8px"><b>What we’re assuming:</b> that the label is right and this is a Cymbidium — its identification isn’t confirmed yet.</p>
+      <p class="small" style="margin:0 0 8px"><b>Recommended:</b> assuming Cymbidium, give it bright light with cool nights, keep the fresh bark barely moist for 2–3 weeks while roots re-establish, and hold off fertilizing until new growth shows.</p>
+      <p class="xs muted" style="margin:0">Source: PCO care sheets · Cymbidium v2 · A photo of the whole plant in today’s light would sharpen this advice.</p>
+    </div>
+    <button class="btn primary" onclick="go('event-add')">I did this — record it</button>
+    <button class="btn ghost" onclick="go('detail-overview')">Not now</button>
+    <p class="xs muted center">Guidance never becomes history until you confirm the work was done.</p>
+  </div>`, true);
+
+def("event-add","AI & flows","Record an event", () => `
+  ${hdr("Record what happened","detail-history")}
+  <div class="body pad-b">
+    <p class="qbig">What happened with this orchid?</p>
+    <div class="field">
+      <textarea style="min-height:84px">I repotted it in medium bark and removed several dead roots.</textarea>
+      <span class="note">🎤 Dictate with your keyboard mic, or type — either way you confirm before anything is saved.</span>
+    </div>
+    <div class="aic">
+      <span class="src s-ai">Our proposal</span>
+      <div class="kv small" style="margin-top:8px">
+        <dt>Activity</dt><dd><b>Repotted</b></dd>
+        <dt>Date</dt><dd>Today · Aug 6, 2026</dd>
+        <dt>Medium</dt><dd>Medium bark</dd>
+        <dt>Observation</dt><dd>Several dead roots removed</dd>
+      </div>
+    </div>
+    <button class="btn accent" onclick="go('detail-history')">Save this event</button>
+    <button class="btn quiet">Change something</button>
+  </div>`, true);
+
+def("loc-update","AI & flows","Update location", () => `
+  ${hdr("Update location","detail-location")}
+  <div class="body pad-b">
+    <p class="qbig">Where is this orchid now?</p>
+    <div class="field"><input value="Rack one, second shelf" aria-label="Location"><span class="note">Speak it, type it, choose below, or scan a rack code.</span></div>
+    <div class="aic">
+      <span class="src s-ai">We think you mean</span>
+      <p class="small" style="margin:6px 0 0"><b>Rack 1 / Shelf 2</b> — Main Growing Area</p>
+    </div>
+    <div class="btnrow">
+      <button class="btn accent" onclick="go('detail-location')">Yes, move it there</button>
+      <button class="btn quiet">Pick from list</button>
+    </div>
+    <hr class="hr">
+    <div class="card">
+      <h3>Power mode — scan chain</h3>
+      <p class="xs muted" style="margin:0 0 10px">Scan orchid → scan rack or shelf → enter slot → confirm. Fastest for a full rack pass.</p>
+      <button class="btn quiet sm" onclick="go('scan')">📷 Start scan chain</button>
+    </div>
+    <p class="xs muted">New locations are never created silently — unknown places always ask first.</p>
+  </div>`, true);
+
+def("similar","AI & flows","Similar orchid discovery", () => `
+  ${hdr("Similar orchids","detail-sharing")}
+  <div class="body pad-b">
+    <div class="notice info"><span>✦</span><div class="small">We found similar orchids shared by other members. Would you like to see them?</div></div>
+    <div class="btnrow">
+      <button class="btn primary">See similar orchids</button>
+      <button class="btn quiet" onclick="go('detail-overview')">Not now</button>
+    </div>
+    <div class="lrow">
+      ${phimg("g5",56)}
+      <div class="grow">
+        <h4 class="serif">Cymbidium Golden Elf ‘Sundust’</h4>
+        <div class="sub">Shared by Marisol’s Greenhouse · platform member</div>
+        <div class="xs" style="color:var(--orchid);margin-top:2px">Similar because both records appear to be Cymbidium Golden Elf ‘Sundust’</div>
+      </div>
+    </div>
+    <div class="lrow">
+      ${phimg("g6",56)}
+      <div class="grow">
+        <h4 class="serif">Cymbidium Golden Elf</h4>
+        <div class="sub">Shared publicly by Fern &amp; Frost Nursery</div>
+        <div class="xs" style="color:var(--orchid);margin-top:2px">Similar because both are Cymbidium grex Golden Elf</div>
+      </div>
+    </div>
+    <p class="xs muted center">Matching uses only what others chose to share — private records never take part.</p>
+  </div>`, true);
+
+def("conflict","AI & flows","Edit conflict", () => `
+  ${hdr("This orchid was changed","detail-overview")}
+  <div class="body pad-b">
+    <div class="notice"><span>🔀</span><div class="small">While you were editing offline, <b>Pat</b> also updated Golden Elf ‘Sundust’. Nothing has been lost — choose what to keep.</div></div>
+    <div class="card">
+      <h3>Location</h3>
+      <div class="share-opt"><span class="radio on"></span><div><b class="small">Keep mine — Rack 1 / Shelf 2</b><div class="xs muted">Your change, made Tuesday in the greenhouse</div></div></div>
+      <div class="share-opt"><span class="radio"></span><div><b class="small">Keep Pat’s — Flowering Area / Display Rack</b><div class="xs muted">Saved yesterday at 4:12 PM</div></div></div>
+    </div>
+    <div class="card">
+      <h3>Story additions</h3>
+      <p class="small" style="margin:0">Both of your story entries were kept — stories always add, never overwrite.</p>
+    </div>
+    <button class="btn accent" onclick="go('detail-overview')">Apply my choices</button>
+  </div>`, true);
+
+/* ================= chrome: rail, tabbar, router ================= */
+const groups = [...new Set(S.map(s=>s.group))];
+const rail = document.getElementById("rail");
+groups.forEach(g=>{
+  const h = document.createElement("h2"); h.textContent = g; rail.appendChild(h);
+  S.filter(s=>s.group===g).forEach(s=>{
+    const b = document.createElement("button");
+    b.id = "rb-"+s.id;
+    b.innerHTML = `<span class="n">${String(S.indexOf(s)+1).padStart(2,"0")}</span><span>${s.title}</span>`;
+    b.onclick = ()=>go(s.id);
+    rail.appendChild(b);
+  });
+});
+
+const TABBAR = `
+  <div class="tabbar">
+    <button data-t="dashboard" onclick="go('dashboard')"><span class="ico">⌂</span>Home</button>
+    <button data-t="orchid-list" onclick="go('orchid-list')"><span class="ico">🌿</span>Orchids</button>
+    <button class="addbtn" onclick="go('add-1')"><span class="ico">＋</span>Add</button>
+    <button data-t="scan" onclick="go('scan')"><span class="ico">▣</span>Scan</button>
+    <button data-t="search" onclick="go('search')"><span class="ico">🔍</span>Search</button>
+  </div>`;
+
+function render(){
+  const id = (location.hash||"#pub-home").slice(1);
+  const s = S.find(x=>x.id===id) || S[0];
+  const scr = document.getElementById("screen");
+  scr.innerHTML = `<div class="app">${s.render()}</div>`;
+  scr.scrollTop = 0;
+  document.getElementById("tabbar").innerHTML = s.tab ? TABBAR : "";
+  document.querySelectorAll("#tabbar [data-t]").forEach(b=>{
+    b.classList.toggle("on", b.dataset.t===s.id ||
+      (b.dataset.t==="orchid-list" && s.id.startsWith("detail")));
+  });
+  document.querySelectorAll(".rail button").forEach(b=>b.classList.toggle("on", b.id==="rb-"+s.id));
+  const on = document.getElementById("rb-"+s.id);
+  if(on) on.scrollIntoView({block:"nearest"});
+}
+addEventListener("hashchange", render);
+addEventListener("keydown", e=>{
+  if(e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+  const id = (location.hash||"#pub-home").slice(1);
+  let i = S.findIndex(x=>x.id===id); if(i<0) i=0;
+  i = (i + (e.key==="ArrowRight"?1:-1) + S.length) % S.length;
+  go(S[i].id);
+});
+render();
+</script>
