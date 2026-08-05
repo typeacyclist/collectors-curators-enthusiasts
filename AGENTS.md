@@ -6,8 +6,8 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 
 ## Architecture status
 
-- The runtime target is the Firebase-native serverless stack defined in ADR-001: a React/TypeScript PWA (Capacitor shells) on Firebase App Hosting, Firebase Auth, App Check, Cloud Firestore with Security Rules, Cloud Storage, Cloud Functions (TypeScript) for trusted commands, and Genkit/Vertex AI for governed AI.
-- ADR-003 (`docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`) retires the FastAPI prototype under `cce-orchid-mvp/`. That code is reference-only and must not be deployed; `cce-orchid-mvp/cloudbuild.yaml` is retired.
+- The runtime target is the Firebase-native serverless stack defined in ADR-001: a React/TypeScript PWA with Capacitor-compatible shells on Firebase Hosting, Firebase Authentication, App Check, Cloud Firestore with Security Rules, Cloud Storage, Cloud Functions written in TypeScript for trusted commands, and Genkit/Vertex AI for governed AI.
+- ADR-003 (`docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`) retires the FastAPI prototype under `cce-orchid-mvp/`. That code is reference-only and must not be deployed; its legacy `cloudbuild.yaml` has been removed.
 - `docs/CODE-REVIEW.md` records the review that prompted this decision.
 
 ## Product rules
@@ -107,4 +107,4 @@ Before merging implementation changes, run the applicable checks:
 
 - Do not commit credentials, service-account files, `.env` secrets, generated build output, virtual environments, or `node_modules`.
 - New collection types must extend versioned templates and shared contracts rather than hardcoding domain behavior throughout the application.
-- The FastAPI application under `cce-orchid-mvp/` is a reference prototype only — not the target runtime and not to be deployed (see the Architecture status section and ADR-003). Its `cloudbuild.yaml` is retired.
+- The FastAPI application under `cce-orchid-mvp/` is a reference prototype only, not the target runtime and not to be deployed. See the Architecture status section and ADR-003.
