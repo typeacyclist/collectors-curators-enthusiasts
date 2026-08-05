@@ -3,7 +3,7 @@
 - **Date:** 2026-08-05
 - **Scope:** every tracked document in the repository at the pre-scaffold foundation stage
 - **Purpose:** identify requirements that are **missing**, **underspecified**, or **contradictory** across the documentation set, before Firebase-native scaffolding begins
-- **Status of this document:** working analysis for triage. Each finding includes a concrete suggested requirement; adopting, amending, or explicitly rejecting each one is the follow-up work.
+- **Status of this document:** resolved 2026-08-05 — 71 of 75 findings resolved in the documents and contracts listed in the Resolution log below; 4 findings (5, 6, 13, 59) await a product decision. Detail sections below record the original analysis.
 
 ## Documents reviewed
 
@@ -85,6 +85,88 @@ Care guidance is promised with no knowledge source or accuracy requirement (#43)
 | #13 Voice input contradiction | Determines whether an entire transcription/audio-deletion subsystem exists in MVP |
 | #17+#18 Offline reference data + quota | "Field-ready offline intake" silently fails in the greenhouse without both |
 | #15 Success-metric telemetry | Without it the pilot cannot prove or disprove the MVP thesis it exists to test |
+
+## Resolution log (2026-08-05)
+
+Shorthand: **MVP Def** = `CCE  Orchid Enthusiasts MVP Definition - WORKING.md` · **core** / **batch** = the JSON schemas · **ACCT** = `docs/requirements/ACCOUNT-TENANT-LIFECYCLE.md` · **OPS** = `docs/requirements/OPERATIONS-LAUNCH-READINESS.md` · **PRIV** = `docs/requirements/PRIVACY-LEGAL-COMPLIANCE.md` · **MEAS** = `docs/requirements/MEASUREMENT-ACCEPTANCE-NFR.md` · **ORCH** = `docs/requirements/ORCHID-DOMAIN-REQUIREMENTS.md`
+
+| # | Resolution |
+|---:|---|
+| 1 | Resolved — MVP Def screens list (reset, verification, account settings) + ACCT §1 |
+| 2 | Resolved — OPS §2 (CI deploy pipeline, rollback) |
+| 3 | Resolved — OPS §1 (dev/staging/prod projects) |
+| 4 | Resolved — MVP Def screens list + PRIV §1 (ToS, Privacy Policy, acceptance gate) |
+| 5 | **Decision pending** — search architecture (client-side index vs managed service vs defer full-text) |
+| 6 | **Decision pending** — public sign-up model; interim guard in ACCT §2 |
+| 7 | Resolved — MEAS §2 (performance budgets) |
+| 8 | Resolved — OPS §3 (scripted idempotent bootstrap) + MVP-PRIORITIES P0 scaffold item 11 |
+| 9 | Resolved — core `collection` def (copy-at-creation semantics) + MVP Def §5 (Archived collection removed) |
+| 10 | Resolved — batch `commandType` taxonomy + `commandEnvelope` + consequence classes |
+| 11 | Resolved — core `orchidTemplateData` + `TemplateData` on thing/draftThing |
+| 12 | Resolved — core `EventType` enum aligned; MVP Def §12 mapping note |
+| 13 | **Decision pending** — voice mechanism (device dictation vs platform transcription) |
+| 14 | Resolved — MEAS §4 ($100 provisional budget, alerts, quotas) |
+| 15 | Resolved — MEAS §1 (instrumentation map) + MVP-PRIORITIES P1 hardening item 7 |
+| 16 | Resolved — MVP-PRIORITIES P0 contracts item 7 (data-model design work item before Rules) |
+| 17 | Resolved — MVP Def connectivity (offline reference data) + AGENTS.md offline rules |
+| 18 | Resolved — MVP Def connectivity (quota behavior) + AGENTS.md offline rules |
+| 19 | Resolved — AGENTS.md media rule + PRIV §2 (EXIF/GPS stripping, acceptance test) |
+| 20 | Resolved — MVP Def §9 "Scan states for every viewer" |
+| 21 | Resolved — MVP Def Update fields separated + core taxonomy fields |
+| 22 | Resolved — core `aiProposal` / `aiProposalClaim` contracts |
+| 23 | Resolved — MVP Def §21 allocation rules + core AccessionNumber comment |
+| 24 | Resolved — ACCT §3 (role-to-command matrix, platform admin, elevated deletion) |
+| 25 | Resolved — PRIV §5 (SHARED_LINK = separate revocable token, `/s/{ShareToken}`) |
+| 26 | Resolved — PRIV §3 (no-training terms, region pinning, AI log retention) |
+| 27 | Resolved — MEAS §3 (scale envelope) |
+| 28 | Resolved — PRIV §5 (report action, unpublish power, takedown contact) |
+| 29 | Resolved — core `thingStatus` DRAFT removed |
+| 30 | Resolved — core `EffectiveAtPrecision` + MVP Def §12 note |
+| 31 | Resolved — ORCH §2 (quarantine workflow) |
+| 32 | Resolved — OPS §5 (scrubbed error/crash reporting) |
+| 33 | Resolved — OPS §13 (incident response, 72-hour breach notification) |
+| 34 | Resolved — deferred; ACCT §4 + MVP Def §25 |
+| 35 | Resolved — OPS §4 (transactional email, SPF/DKIM/DMARC) |
+| 36 | Resolved — PRIV §6 (first-party content-free telemetry policy) |
+| 37 | Resolved — core `RelatedThingUUIDs` + ORCH §3 (division lineage) |
+| 38 | Resolved — OPS §10 (help entry, support email, feedback form) |
+| 39 | Resolved — MEAS §6 (usability protocol) |
+| 40 | Resolved — PRIV §5 (rate limiting, non-enumerability, uniform generic page) |
+| 41 | Resolved — MEAS §7 (WCAG 2.1 AA + test method) |
+| 42 | Resolved — MEAS §5 (golden set: owner, contents, thresholds, CI gate) |
+| 43 | Resolved — ORCH §1 (curated versioned care knowledge base) |
+| 44 | Resolved — OPS §8 (pinned models, reviewed prompt changes) |
+| 45 | Resolved — MEAS §9 (support floor + physical-device QA set) |
+| 46 | Resolved — PRIV §4 (deletion workflows, propagation, grace period) |
+| 47 | Resolved — PRIV §4 + core `REDACTED`/`REDACT_EVENT` tombstone mechanism |
+| 48 | Resolved — OPS §9 (domain continuity) |
+| 49 | Resolved — batch `batchIntakeSession.SharedDefaults` + ORCH §4 |
+| 50 | Resolved — MEAS §11 (synthetic stock, 300 DPI, 30-day greenhouse scan test) |
+| 51 | Resolved — ACCT §5 + MVP-PRIORITIES P1 hardening item 8 |
+| 52 | Resolved — OPS §6 (alert signals, thresholds, recipients) |
+| 53 | Resolved — ACCT §6 (in-app-only notification surface) |
+| 54 | Resolved — MEAS §12 (pilot exit criteria) |
+| 55 | Resolved — MVP-PRIORITIES P1 hardening item 9 (tenant JSON/CSV export) |
+| 56 | Resolved — free text retained; deferral recorded in MVP Def §25 + ORCH §5 |
+| 57 | Resolved — MEAS §8 (AI never blocks intake; async fallback) |
+| 58 | Resolved — OPS §7 (PITR, media versioning, RPO/RTO, restore tests) |
+| 59 | **Decision pending** — similarity scope (deterministic matching in Release 5 vs move post-MVP) |
+| 60 | Resolved — ACCT §7 (sessions, revocation ≤1 h, sign-out safeguards) |
+| 61 | Resolved — MVP Def §17 (tenant public contact method) + ORCH §6 |
+| 62 | Resolved — core DraftThing.Narrative mapping comment (first timeline entry) |
+| 63 | Resolved — core `labelTemplate` contract (allowlisted fields, privacy review) |
+| 64 | Resolved — core/batch `labelId` (opaque 8–36 char; short codes preferred) |
+| 65 | Resolved — MEAS §10 (standard-user conflict screen) |
+| 66 | Resolved — ORCH §6 (listing, transfer, post-transfer QR) |
+| 67 | Resolved — deferred; MVP Def §25 (reminders/tasks) |
+| 68 | Resolved — ORCH §7 (ISO 4217, UTC + precision, metric-when-structured) |
+| 69 | Resolved — PRIV §1 (18+ minimum age) |
+| 70 | Resolved — deferred; MVP Def §25 + ORCH §8 (EnvironmentNotes accommodation) |
+| 71 | Resolved — ORCH §9 (first-run card, defined empty states) |
+| 72 | Resolved — OPS §11 (pilot SLO 99.5%, support expectations) |
+| 73 | Resolved — deferred; MVP Def §25 + ORCH §10 |
+| 74 | Resolved — ORCH §11 (BLOOM_* canonical, "Flowered" mapping) |
+| 75 | Resolved — OPS §12 (workload identity, Secret Manager, rotation) |
 
 
 ## P0 — must resolve before or at MVP launch

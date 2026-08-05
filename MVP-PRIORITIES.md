@@ -23,12 +23,13 @@ The prototype demonstrated that the following workflow concepts can operate toge
 
 ## P0 - Complete contracts and validation foundation
 
-1. Add canonical schemas for command envelopes, identity, tenants, memberships, locations, taxonomy, narratives, AI proposals, media, labels, exports, and the contract registry.
+1. Add canonical schemas for command envelopes, identity, tenants, memberships, locations, taxonomy, narratives, AI proposals, media, labels, collections, exports, and the contract registry. (Command envelopes, command types, AI proposals, collections, label templates, and orchid template data landed 2026-08-05; the remainder are outstanding.)
 2. Add valid and invalid contract examples.
 3. Add AJV compilation with cross-file reference validation.
 4. Generate TypeScript types from versioned schemas.
 5. Add contract compatibility and unknown-property tests.
 6. Add CI for schema validation, type-checking, tests, and secret scanning.
+7. Document the Firestore data model: document paths, collection layout, composite indexes, and the derived projections that answer the dashboard counts, list views, and search queries in the MVP Definition — before Security Rules are written against those paths.
 
 ## P0 - Scaffold the Firebase-native MVP
 
@@ -44,6 +45,8 @@ This work replaces the earlier Cloud Run, Cloud SQL, and Alembic deployment plan
 8. Add the `OfflineDraftStore` interface and IndexedDB adapter foundation with visible synchronization state.
 9. Add callable command foundations with operation-ledger deduplication, `ExpectedVersion` checks, tenant validation, accession allocation, and lifecycle events.
 10. Configure Firebase Hosting and `orchid-enthusiasts.com` HTTPS routing after local and emulator validation.
+11. Add the scripted, idempotent, audited production bootstrap (platform administrator, PCO tenant, Owner membership, tenant settings, recommended locations and collections, accession sequence) per `docs/requirements/OPERATIONS-LAUNCH-READINESS.md`. Direct console mutation of canonical documents is prohibited.
+12. Stand up the dev/staging/prod Firebase project structure and CI deployment pipeline per `docs/requirements/OPERATIONS-LAUNCH-READINESS.md`.
 
 ## P1 - First usable Firebase-native vertical slice
 
@@ -63,7 +66,11 @@ This work replaces the earlier Cloud Run, Cloud SQL, and Alembic deployment plan
 3. Represent location changes through event history while retaining explicit current state.
 4. Store generated label PDFs in Cloud Storage when retention is required.
 5. Add user-friendly validation, conflict, retry, and error states in the PWA.
-6. Configure Firestore backups, backup-restore verification, and Cloud Monitoring alerts.
+6. Configure Firestore backups, backup-restore verification, and Cloud Monitoring alerts per the backup and alerting requirements in `docs/requirements/OPERATIONS-LAUNCH-READINESS.md` (includes Cloud Storage media, RPO/RTO targets, and restore-test cadence).
+7. Add success-metric and FinOps instrumentation per `docs/requirements/MEASUREMENT-ACCEPTANCE-NFR.md`.
+8. Add member invitation flow (Owner invites by email; verified-email acceptance; membership created through a trusted command) per `docs/requirements/ACCOUNT-TENANT-LIFECYCLE.md`.
+9. Add tenant JSON/CSV export (ADR-001 requires basic export before any paid pilot).
+10. Offer optional multi-factor authentication to Owner accounts.
 
 ## P2 - First CCE experience expansion
 

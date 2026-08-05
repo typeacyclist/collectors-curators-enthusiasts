@@ -33,6 +33,8 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 ## Offline and synchronization
 
 - Essential intake must work without connectivity.
+- The tenant's location tree, collection list, active templates, and label templates must be cached locally on sync so offline intake can select them; cached reference data is read-only offline and shows staleness.
+- The application must request persistent storage, monitor local quota, warn before draft storage is exhausted, and degrade gracefully; unsynchronized drafts are never silently evicted.
 - Local drafts must show visible synchronization state and support manual retry.
 - Commands must include `ClientOperationID`, `ExpectedVersion`, `ThingUUID`, `TenantUUID`, and actor identity.
 - Trusted command handlers must use transactional deduplication and version checks.
@@ -63,6 +65,7 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 ## Media and FinOps
 
 - Generate configurable display, AI, OCR-region, and thumbnail derivatives where device capability permits.
+- Strip all EXIF metadata, including GPS coordinates, from every derivative and from any image served on a shared, platform, or public surface; the original with its metadata is retained privately per tenant policy. No publicly reachable image may carry location metadata.
 - Preserve processing metadata and retain original evidence according to tenant policy.
 - Do not hardcode example image dimensions as permanent architecture limits.
 - Use application-level quotas, rate limits, duplicate detection, caching, and model routing.

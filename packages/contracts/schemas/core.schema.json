@@ -7,9 +7,19 @@
       "type": "string",
       "format": "uuid"
     },
+    "labelId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{8,36}$",
+      "$comment": "Opaque permanent QR identity per ADR-001. Client-generated. UUIDs are valid; shorter URL-safe opaque codes (e.g. 12-16 char base62) are preferred for QR density on 1x4 inch labels. Never derived from tenant, accession, or name; never an authorization credential."
+    },
     "timestamp": {
       "type": "string",
       "format": "date-time"
+    },
+    "datePrecision": {
+      "type": "string",
+      "enum": ["EXACT", "DAY", "MONTH", "YEAR"],
+      "$comment": "Preserves stated precision per Governance 10.4 (avoid false precision). EXACT = full timestamp meaningful; DAY/MONTH/YEAR = only that component was stated by the user."
     },
     "sharingLevel": {
       "type": "string",
@@ -17,7 +27,8 @@
     },
     "thingStatus": {
       "type": "string",
-      "enum": ["DRAFT", "ACTIVE", "QUARANTINE", "FOR_SALE", "RESERVED", "TRANSFERRED", "ARCHIVED"]
+      "enum": ["ACTIVE", "QUARANTINE", "FOR_SALE", "RESERVED", "TRANSFERRED", "ARCHIVED"],
+      "$comment": "DRAFT removed 2026-08-05 (gap analysis finding 29): unsynchronized drafts exist only as DraftThing with SyncState; a canonical Thing is never in a draft state."
     },
     "syncState": {
       "type": "string",
@@ -50,9 +61,81 @@
       "required": ["ThingUUID", "LabelID"],
       "properties": {
         "ThingUUID": { "$ref": "#/$defs/uuid" },
-        "LabelID": { "$ref": "#/$defs/uuid" },
-        "AccessionNumber": { "type": ["string", "null"], "minLength": 1 }
+        "LabelID": { "$ref": "#/$defs/labelId" },
+        "AccessionNumber": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "$comment": "Server-allocated per tenant during canonical commit: format from tenant settings (default {SHORT}-{YYYY}-{SEQ4}, e.g. PCO-2026-0001); sequence is per-tenant per-year, zero-padded to 4 (overflow widens, no rollover), allocated transactionally, year from tenant time zone at allocation; gaps from failed commits are permitted; numbers are never reused or reassigned."
+        }
       }
+    },
+    "collection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "CollectionUUID",
+        "TenantUUID",
+        "Name",
+        "Status",
+        "DefaultSharingLevel",
+        "Version",
+        "CreatedAt",
+        "UpdatedAt"
+      ],
+      "properties": {
+        "CollectionUUID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "Name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "Description": { "type": ["string", "null"], "maxLength": 2000 },
+        "Status": { "type": "string", "enum": ["ACTIVE", "ARCHIVED"] },
+        "DefaultSharingLevel": { "$ref": "#/$defs/sharingLevel" },
+        "DefaultLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Version": { "type": "integer", "minimum": 1 },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" },
+        "UpdatedAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "$comment": "Gap analysis finding 9. DefaultSharingLevel and DefaultLocationUUID are applied ONCE at Thing creation and thereafter owned by the Thing; later collection-default changes do not propagate. Archive of a Thing is exclusively a Status - there is no special archived collection."
+    },
+    "orchidTemplateData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "NameAsEntered": { "type": ["string", "null"], "maxLength": 300 },
+        "Genus": { "type": ["string", "null"], "maxLength": 100 },
+        "SpeciesEpithet": { "type": ["string", "null"], "maxLength": 100 },
+        "Grex": { "type": ["string", "null"], "maxLength": 150 },
+        "ClonalEpithet": { "type": ["string", "null"], "maxLength": 150 },
+        "CultivarEpithet": { "type": ["string", "null"], "maxLength": 150 },
+        "NameType": {
+          "type": ["string", "null"],
+          "enum": ["SPECIES", "HYBRID_GREX", "INTERGENERIC", "UNKNOWN", null]
+        },
+        "HybridOrigin": {
+          "type": ["string", "null"],
+          "$comment": "Optional and only when origin is separately known, per ADR-001 correction 1. Never duplicates NameType."
+        },
+        "IdentificationVerification": {
+          "type": ["string", "null"],
+          "enum": ["UNVERIFIED", "LABEL_BASED", "USER_CONFIRMED", "EXTERNALLY_VERIFIED", null],
+          "$comment": "EXTERNALLY_VERIFIED requires an approved authoritative source per ADR-002 taxonomy rules; cache or fuzzy matches never set it."
+        },
+        "AcquisitionMethod": {
+          "type": ["string", "null"],
+          "enum": ["PURCHASE", "GIFT", "TRADE", "DIVISION", "GROWN_FROM_FLASK", "OTHER", null]
+        },
+        "AcquisitionSourceText": { "type": ["string", "null"], "maxLength": 300 },
+        "AcquiredAt": { "anyOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }] },
+        "AcquiredAtPrecision": { "anyOf": [{ "$ref": "#/$defs/datePrecision" }, { "type": "null" }] },
+        "AcquisitionPrice": { "type": ["number", "null"], "minimum": 0 },
+        "AcquisitionCurrency": {
+          "type": ["string", "null"],
+          "pattern": "^[A-Z]{3}$",
+          "$comment": "ISO 4217 code; tenant default currency applies when null."
+        },
+        "ConditionNote": { "type": ["string", "null"], "maxLength": 2000 },
+        "Notes": { "type": ["string", "null"], "maxLength": 5000 }
+      },
+      "$comment": "Gap analysis findings 11 and 21. Orchid collection-template data carried in Thing.TemplateData for TemplateID 'orchid'. Botanical concepts stay separate per ADR-001 Taxonomy: species epithet, grex, clonal epithet, and cultivar epithet are never combined; NameAsEntered preserves the name exactly as provided. All fields optional - minimum required record needs none of them."
     },
     "thing": {
       "type": "object",
@@ -73,13 +156,17 @@
       ],
       "properties": {
         "ThingUUID": { "$ref": "#/$defs/uuid" },
-        "LabelID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/labelId" },
         "AccessionNumber": { "type": ["string", "null"] },
         "TenantUUID": { "$ref": "#/$defs/uuid" },
         "CollectionUUID": { "$ref": "#/$defs/uuid" },
         "TemplateID": { "type": "string", "minLength": 1 },
         "TemplateVersion": { "type": "string", "minLength": 1 },
         "DisplayName": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "TemplateData": {
+          "type": ["object", "null"],
+          "$comment": "Template-specific structured data validated against the template's data schema for TemplateID/TemplateVersion (orchidTemplateData for TemplateID 'orchid'). Gap analysis finding 11."
+        },
         "CurrentLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
         "Status": { "$ref": "#/$defs/thingStatus" },
         "SharingLevel": { "$ref": "#/$defs/sharingLevel" },
@@ -111,12 +198,20 @@
       "properties": {
         "DraftUUID": { "$ref": "#/$defs/uuid" },
         "ThingUUID": { "$ref": "#/$defs/uuid" },
-        "LabelID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/labelId" },
         "TenantUUID": { "$ref": "#/$defs/uuid" },
         "CollectionUUID": { "$ref": "#/$defs/uuid" },
         "TemplateID": { "type": "string", "minLength": 1 },
         "TemplateVersion": { "type": "string", "minLength": 1 },
-        "Narrative": { "type": "string", "maxLength": 20000 },
+        "Narrative": {
+          "type": "string",
+          "maxLength": 20000,
+          "$comment": "The intake narrative only (gap analysis finding 62). On canonical commit it becomes the Thing's first entry in the append-oriented narrative timeline (narrative contract to be added per MVP-PRIORITIES); it is never overwritten by later narrative operations."
+        },
+        "TemplateData": {
+          "type": ["object", "null"],
+          "$comment": "Optional pre-confirmation template data (e.g. user-typed identification). AI-proposed values live in aiProposal until confirmed, never here."
+        },
         "SelectedLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
         "Media": { "type": "array", "items": { "$ref": "#/$defs/mediaReference" }, "maxItems": 20 },
         "SyncState": { "$ref": "#/$defs/syncState" },
@@ -150,6 +245,9 @@
             "CREATED",
             "ACQUIRED",
             "LOCATION_CHANGED",
+            "COLLECTION_CHANGED",
+            "STATUS_CHANGED",
+            "SHARING_CHANGED",
             "REPOTTED",
             "BLOOM_STARTED",
             "BLOOM_ENDED",
@@ -158,14 +256,35 @@
             "FERTILIZED",
             "WATERED",
             "DIVIDED",
+            "PHOTOGRAPHED",
             "IDENTIFICATION_CHANGED",
-            "LABEL_PRINTED",
+            "NARRATIVE_ADDED",
+            "NARRATIVE_UPDATED",
+            "NARRATIVE_REMOVED",
+            "NARRATIVE_RESTORED",
+            "LISTED_FOR_SALE",
+            "SALE_LISTING_REMOVED",
+            "TRANSFERRED",
+            "LABEL_PRINT_REQUESTED",
+            "LABEL_PRINT_CONFIRMED",
             "ARCHIVED",
             "RESTORED",
+            "REDACTED",
             "GENERAL_NOTE"
-          ]
+          ],
+          "$comment": "Aligned with MVP Definition section 12 and ADR-002 on 2026-08-05 (gap analysis finding 12). User-facing vocabulary maps: MOVED -> LOCATION_CHANGED, FLOWERED -> BLOOM_STARTED. LABEL_PRINTED was split into LABEL_PRINT_REQUESTED / LABEL_PRINT_CONFIRMED per ADR-002. REDACTED records privacy-required removal of a prior event's free-text content (finding 47) via SupersedesEventUUID while preserving event structure."
         },
         "EffectiveAt": { "$ref": "#/$defs/timestamp" },
+        "EffectiveAtPrecision": {
+          "anyOf": [{ "$ref": "#/$defs/datePrecision" }, { "type": "null" }],
+          "$comment": "Gap analysis finding 30: backdated user statements ('sometime last spring') keep their stated precision instead of a falsely exact timestamp. Null means EXACT (recorded in real time)."
+        },
+        "RelatedThingUUIDs": {
+          "type": ["array", "null"],
+          "items": { "$ref": "#/$defs/uuid" },
+          "maxItems": 50,
+          "$comment": "Gap analysis finding 37: DIVIDED events on the parent list the child ThingUUIDs (and the child's ACQUIRED/CREATED event references the parent), preserving propagation lineage."
+        },
         "RecordedAt": { "$ref": "#/$defs/timestamp" },
         "RecordedByUserUUID": { "$ref": "#/$defs/uuid" },
         "SourceType": { "type": "string", "enum": ["USER", "SYSTEM", "IMPORT", "AI_CONFIRMED"] },
@@ -175,6 +294,126 @@
         "ResultingState": { "type": ["object", "null"] },
         "ClientOperationID": { "$ref": "#/$defs/uuid" },
         "SupersedesEventUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] }
+      }
+    },
+    "aiProposalClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ClaimUUID", "FieldPath", "ProposedValue", "SourceType", "Confidence", "Status"],
+      "properties": {
+        "ClaimUUID": { "$ref": "#/$defs/uuid" },
+        "FieldPath": {
+          "type": "string",
+          "minLength": 1,
+          "$comment": "Dot path into the Thing or TemplateData, e.g. 'TemplateData.Genus' or 'DisplayName'."
+        },
+        "ProposedValue": {},
+        "SourceType": {
+          "type": "string",
+          "enum": ["USER_STATEMENT", "IMAGE_TEXT", "DOCUMENT_TEXT", "AI_INFERENCE", "AI_DEDUCTION", "TAXONOMY_CACHE"]
+        },
+        "EvidenceRefs": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "$comment": "References to the narrative span, MediaUUID, or cache entry supporting the claim. Required non-empty for extraction claims; may be empty only for AI_INFERENCE/AI_DEDUCTION, which must then carry UncertaintyNote."
+        },
+        "Confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "UncertaintyNote": { "type": ["string", "null"], "maxLength": 500 },
+        "ConflictsWithClaimUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Status": {
+          "type": "string",
+          "enum": ["PROPOSED", "CONFIRMED", "EDITED_THEN_CONFIRMED", "REJECTED", "SKIPPED"]
+        },
+        "ReviewedByUserUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "ReviewedAt": { "anyOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }] }
+      }
+    },
+    "aiProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ProposalUUID",
+        "TenantUUID",
+        "ThingUUID",
+        "Status",
+        "Claims",
+        "ModelVersion",
+        "PromptVersion",
+        "OutputSchemaVersion",
+        "TemplateVersion",
+        "CreatedAt"
+      ],
+      "properties": {
+        "ProposalUUID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "DraftUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+        "Status": {
+          "type": "string",
+          "enum": ["PENDING_REVIEW", "PARTIALLY_REVIEWED", "REVIEW_COMPLETE", "SUPERSEDED", "EXPIRED"]
+        },
+        "Claims": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": { "$ref": "#/$defs/aiProposalClaim" }
+        },
+        "SuggestedFollowUpQuestion": { "type": ["string", "null"], "maxLength": 500 },
+        "ModelVersion": { "type": "string", "minLength": 1 },
+        "PromptVersion": { "type": "string", "minLength": 1 },
+        "OutputSchemaVersion": { "type": "string", "minLength": 1 },
+        "TemplateVersion": { "type": "string", "minLength": 1 },
+        "KnowledgeVersion": { "type": ["string", "null"] },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" },
+        "SupersededByProposalUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] }
+      },
+      "$comment": "Gap analysis finding 22. AI holds no canonical write capability (ADR-001): a proposal is inert data until CONFIRM_AI_PROPOSAL commits user-confirmed claims through the trusted command layer, which validates each confirmed claim deterministically before applying it. Claim status records the user's per-claim decision; reprocessing creates a new proposal that supersedes rather than mutates."
+    },
+    "labelTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "LabelTemplateID",
+        "Version",
+        "Name",
+        "WidthInches",
+        "HeightInches",
+        "Fields",
+        "IncludesQR",
+        "PrivacyReviewed"
+      ],
+      "properties": {
+        "LabelTemplateID": { "type": "string", "minLength": 1 },
+        "Version": { "type": "string", "minLength": 1 },
+        "Name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "WidthInches": { "type": "number", "exclusiveMinimum": 0 },
+        "HeightInches": { "type": "number", "exclusiveMinimum": 0 },
+        "Fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "DISPLAY_NAME",
+              "GENUS_AND_EPITHET",
+              "GREX",
+              "CLONAL_EPITHET",
+              "ACCESSION_NUMBER",
+              "COLLECTION_NAME",
+              "TENANT_NAME",
+              "ACQUIRED_YEAR"
+            ]
+          },
+          "$comment": "Allowlisted fields only (gap analysis finding 63). Location, price, source, and notes are intentionally not printable per Governance 13: labels must not expose private information unless explicitly configured through a future reviewed extension."
+        },
+        "IncludesQR": { "type": "boolean" },
+        "MinQRModuleInches": {
+          "type": ["number", "null"],
+          "$comment": "Minimum printed QR size; default profile requires the QR symbol >= 0.6 x 0.6 inches on the 1x4 default label for reliable phone-camera scans."
+        },
+        "PrivacyReviewed": {
+          "type": "boolean",
+          "$comment": "Must be true before the template is offered to tenants."
+        }
       }
     }
   }

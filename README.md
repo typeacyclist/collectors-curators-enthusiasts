@@ -31,7 +31,7 @@ Use these documents in this order when implementation details conflict:
 7. `AGENTS.md`
 8. `MVP-PRIORITIES.md`
 
-`docs/CODE-REVIEW.md` provides the implementation-review checklist. `docs/REPOSITORY-AUDIT-2026-08-05.md` records the repository retirement review.
+`docs/CODE-REVIEW.md` provides the implementation-review checklist. `docs/REPOSITORY-AUDIT-2026-08-05.md` records the repository retirement review. `docs/MVP-REQUIREMENTS-GAP-ANALYSIS-2026-08-05.md` records the requirements gap analysis and its resolution log; the adopted requirements live under `docs/requirements/` (account/tenant lifecycle, operations and launch readiness, privacy/legal/compliance, measurement/acceptance/NFRs, orchid domain).
 
 ## Target architecture
 
@@ -72,11 +72,18 @@ FastAPI, Cloud Run as the primary application host, and Cloud SQL/PostgreSQL as 
 ├── README.md
 ├── docs/
 │   ├── CODE-REVIEW.md
+│   ├── MVP-REQUIREMENTS-GAP-ANALYSIS-2026-08-05.md
 │   ├── REPOSITORY-AUDIT-2026-08-05.md
-│   └── architecture/
-│       ├── ADR-001-ai-native-mobile-offline.md
-│       ├── ADR-002-batch-intake-finops.md
-│       └── ADR-003-retire-fastapi-adopt-firebase-native.md
+│   ├── architecture/
+│   │   ├── ADR-001-ai-native-mobile-offline.md
+│   │   ├── ADR-002-batch-intake-finops.md
+│   │   └── ADR-003-retire-fastapi-adopt-firebase-native.md
+│   └── requirements/
+│       ├── ACCOUNT-TENANT-LIFECYCLE.md
+│       ├── MEASUREMENT-ACCEPTANCE-NFR.md
+│       ├── OPERATIONS-LAUNCH-READINESS.md
+│       ├── ORCHID-DOMAIN-REQUIREMENTS.md
+│       └── PRIVACY-LEGAL-COMPLIANCE.md
 └── packages/
     └── contracts/
         └── schemas/

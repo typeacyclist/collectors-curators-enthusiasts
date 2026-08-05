@@ -81,12 +81,16 @@ Users must be able to update an orchid on mobile, including:
 
 - Display name
 - Genus
-- Species or grex
-- Cultivar or clone
+- Species epithet
+- Grex
+- Clonal epithet
+- Cultivar epithet
 - Location
 - Status
 - Optional notes
 - Acquisition information included in the MVP
+
+Botanical name concepts remain separate fields per ADR-001 taxonomy rules: species epithet, grex, clonal epithet, and cultivar epithet are never combined into one field, and the name as originally entered is preserved.
 
 Location changes must use defined tenant locations.
 
@@ -210,6 +214,11 @@ At minimum:
 - Failed saves should permit retry without re-entering the record.
 
 Offline creation and intake-draft synchronization are required for the MVP. Complete offline support for every CRUD and administrative workflow is not required; unsupported offline actions must remain visibly pending or unavailable until connectivity returns.
+
+Offline intake additionally requires:
+
+- **Offline reference data.** The tenant's location tree, collection list, active collection templates, and label templates are cached locally on every successful sync so that the intake flow (collection selection, location selection) works without connectivity. Cached reference data shows its last-refreshed time when stale and is read-only offline; locations cannot be created offline.
+- **Storage quota behavior.** The application requests persistent storage from the browser, monitors local usage, warns the user when draft storage approaches its quota, and refuses new photo capture gracefully (with a clear explanation) rather than failing silently or evicting existing drafts. Unsynchronized drafts are never silently discarded; documentation and UI must not claim local drafts are loss-proof (per ADR-002).
 
 ------
 
@@ -436,9 +445,10 @@ PCO Collections
 ├── Main Orchid Collection
 ├── Oakland Acquisition
 ├── Quarantine
-├── For Sale
-└── Archived Orchids
+└── For Sale
 ```
+
+Archiving is exclusively a Thing **status** (`ARCHIVED`), never a collection: an archived orchid stays in its collection with its history intact. Collection defaults (sharing, location) are applied once when an orchid is created in the collection and are thereafter owned by the orchid; changing a collection's defaults later does not alter existing orchids.
 
 ## Collection behavior
 
@@ -704,6 +714,17 @@ Current location: Rack 1 / Shelf 2
 Last activity: Added July 30, 2026
 ```
 
+## Scan states for every viewer
+
+A scanned QR must resolve to a defined view for every combination of viewer and record state:
+
+- **Authorized member:** the tenant management view shown above.
+- **Authenticated non-member or signed-out visitor, orchid shared at their level:** the permitted shared view for that sharing level, excluding private fields per Section 17.
+- **Any unauthorized viewer, orchid `PRIVATE`:** a generic page stating only that the label belongs to a private collection on Orchid Enthusiasts, with a sign-in action. The page must not reveal the orchid's name, photographs, tenant, existence timeline, or any record data.
+- **QR printed before synchronization (pending activation, per ADR-001):** a generic "label not yet activated" page with the same non-disclosure rule.
+
+Unknown or malformed LabelIDs return the same generic page as `PRIVATE` records so that scanning cannot distinguish "private" from "nonexistent."
+
 Primary actions:
 
 ```text
@@ -797,6 +818,8 @@ TRANSFERRED
 ARCHIVED
 GENERAL_NOTE
 ```
+
+These are user-facing names. Each maps to a canonical `EventType` in `core.schema.json`: `MOVED` → `LOCATION_CHANGED`, `FLOWERED` → `BLOOM_STARTED` (bloom end recorded as `BLOOM_ENDED`), and the remainder map to their same-named canonical types. Backdated events preserve the user's stated date precision (`EffectiveAtPrecision`: day, month, or year) rather than inventing an exact timestamp. A `DIVIDED` event links the parent and child plant records so propagation lineage is preserved.
 
 The normal user does not need to select from a technical list.
 
@@ -988,6 +1011,8 @@ Public and shared views should exclude by default:
 
 The user may preview the shared page before publishing.
 
+An orchid shared with status `FOR_SALE` displays the tenant's **public contact method** — a tenant setting (email address, phone, or web link) that the Owner explicitly designates for sale inquiries. No member's personal contact information is ever shown; if no public contact method is configured, the sale page states that the item is offered by the collection and shows no contact route.
+
 ------
 
 # 18. Similar Orchid Discovery
@@ -1022,8 +1047,14 @@ For the first MVP, viewing similar shared orchids is sufficient. Direct member m
 1. Orchid Enthusiasts home
 2. Sign in
 3. Create account
-4. Shared orchid page
-5. QR orchid page
+4. Forgot password / reset password
+5. Account settings (change password, change email, sign out of all devices, delete account request)
+6. Shared orchid page
+7. QR orchid page
+8. Terms of Service
+9. Privacy Policy
+
+Account creation requires email verification before the account can create a tenant or accept a membership invitation. Password reset uses Firebase Authentication email-based reset sent from the platform's verified sending domain. Owner accounts are offered optional multi-factor authentication during pilot hardening.
 
 ## Tenant application
 
@@ -1106,6 +1137,15 @@ Example:
 PCO-2026-0001
 ```
 
+Accession-number allocation rules:
+
+- Allocated only by trusted server logic during canonical commit, inside the command transaction (never client-side).
+- The sequence is per-tenant and per-year, starting at 1 each year; the year is determined by the tenant time zone at allocation time.
+- The sequence is zero-padded to four digits; if a tenant exceeds 9999 in one year the number widens (e.g. `PCO-2026-10000`) rather than rolling over.
+- Gaps caused by failed or abandoned commits are permitted and never backfilled.
+- An accession number is never reused, reassigned, or changed after allocation, including after archive or transfer.
+- The format string is a tenant setting fixed at tenant creation; changing it later applies only to future allocations.
+
 ------
 
 # 22. MVP Privacy Rules
@@ -1187,6 +1227,8 @@ Operational targets:
 - AI clearly distinguishes user statements from inference
 - Sharing remains private unless explicitly changed
 
+How each target is instrumented, measured, and accepted — including the usability protocol behind "without training" — is defined in `docs/requirements/MEASUREMENT-ACCEPTANCE-NFR.md`.
+
 ------
 
 # 25. Out of Scope for the First MVP
@@ -1197,12 +1239,17 @@ Defer:
 - General plant template
 - E-commerce checkout
 - Payment processing
+- Subscription plans and billing (the Owner "Manage subscription" screen shows a pilot placeholder only)
 - Full nursery inventory
 - Shipping
 - Accounting
 - Automated CITES management
 - Environmental sensors
 - Automated watering
+- Care reminders, scheduled tasks, and notifications-driven care workflows
+- Award records (AOS and other judging systems) as structured fields
+- Structured vendor/source entities (acquisition source remains free text in the MVP)
+- Growing-condition attributes on locations (temperature class, light, humidity)
 - Native mobile applications
 - Complex social network
 - Direct member chat
@@ -1211,6 +1258,8 @@ Defer:
 - AI-only verified identification
 - Advanced breeding management
 - Detailed production costing
+
+Each deferred item above is a recorded scope decision: absence from the MVP is intentional, not an oversight.
 
 ------
 

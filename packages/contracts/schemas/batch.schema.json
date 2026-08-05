@@ -11,6 +11,61 @@
       "type": "string",
       "format": "date-time"
     },
+    "labelId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{8,36}$",
+      "$comment": "Mirrors core.schema.json labelId (gap analysis finding 64)."
+    },
+    "commandType": {
+      "type": "string",
+      "enum": [
+        "CREATE_THING",
+        "UPDATE_TEMPLATE_DATA",
+        "CHANGE_LOCATION",
+        "CHANGE_STATUS",
+        "CHANGE_SHARING",
+        "CHANGE_COLLECTION",
+        "LIST_FOR_SALE",
+        "REMOVE_SALE_LISTING",
+        "RECORD_TRANSFER",
+        "ARCHIVE_THING",
+        "RESTORE_THING",
+        "RECORD_EVENT",
+        "ADD_NARRATIVE",
+        "UPDATE_NARRATIVE",
+        "REMOVE_NARRATIVE",
+        "RESTORE_NARRATIVE",
+        "CONFIRM_AI_PROPOSAL",
+        "QUEUE_LABEL_PRINT",
+        "REDACT_EVENT",
+        "DELETE_THING_PERMANENTLY"
+      ],
+      "$comment": "Gap analysis finding 10: distinct typed commands, each with a closed payload schema (to be added alongside handlers), replace the former generic UPDATE_METADATA with open payload. Consequence classification is derivable from the type alone: CONSEQUENTIAL commands (CHANGE_LOCATION, CHANGE_STATUS, CHANGE_SHARING, CHANGE_COLLECTION, LIST_FOR_SALE, REMOVE_SALE_LISTING, RECORD_TRANSFER, ARCHIVE_THING, RESTORE_THING, REMOVE_NARRATIVE, REDACT_EVENT, DELETE_THING_PERMANENTLY) require explicit user confirmation, are excluded from ADR-002 bulk approval, and enforce elevated role rules (DELETE_THING_PERMANENTLY and REDACT_EVENT are Owner-only with typed confirmation). All others are STANDARD and eligible for allowlisted bulk review per ADR-002."
+    },
+    "commandEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ClientOperationID",
+        "TenantUUID",
+        "ThingUUID",
+        "ActorUserUUID",
+        "CommandType",
+        "Payload",
+        "CreatedAt"
+      ],
+      "properties": {
+        "ClientOperationID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "ThingUUID": { "$ref": "#/$defs/uuid" },
+        "ActorUserUUID": { "$ref": "#/$defs/uuid" },
+        "CommandType": { "$ref": "#/$defs/commandType" },
+        "ExpectedVersion": { "type": ["integer", "null"], "minimum": 0 },
+        "Payload": { "type": "object" },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" }
+      },
+      "$comment": "Single (non-batch) trusted command envelope per ADR-001 command/query separation - the same shape the batch operations wrap. ExpectedVersion null only for CREATE_THING."
+    },
     "batchOperation": {
       "type": "object",
       "additionalProperties": false,
@@ -27,19 +82,46 @@
           "type": ["integer", "null"],
           "minimum": 0
         },
-        "CommandType": {
-          "type": "string",
-          "enum": [
-            "CREATE_THING",
-            "UPDATE_METADATA",
-            "RECORD_EVENT",
-            "CONFIRM_AI_PROPOSAL",
-            "QUEUE_LABEL_PRINT"
-          ]
-        },
+        "CommandType": { "$ref": "#/$defs/commandType" },
         "Payload": {
           "type": "object"
         }
+      }
+    },
+    "batchIntakeSession": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "BatchSessionUUID",
+        "TenantUUID",
+        "CreatedByUserUUID",
+        "DraftUUIDs",
+        "CreatedAt"
+      ],
+      "properties": {
+        "BatchSessionUUID": { "$ref": "#/$defs/uuid" },
+        "TenantUUID": { "$ref": "#/$defs/uuid" },
+        "CreatedByUserUUID": { "$ref": "#/$defs/uuid" },
+        "Name": { "type": ["string", "null"], "maxLength": 200 },
+        "SharedDefaults": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "AcquisitionSourceText": { "type": ["string", "null"], "maxLength": 300 },
+            "AcquisitionMethod": { "type": ["string", "null"] },
+            "AcquiredAt": { "anyOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }] },
+            "DefaultCollectionUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+            "DefaultLocationUUID": { "anyOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }] },
+            "QuarantineOnIntake": { "type": ["boolean", "null"] }
+          },
+          "$comment": "Gap analysis finding 49 (the Oakland Acquisition scenario): shared acquisition-lot defaults applied to each draft AT CAPTURE TIME as ordinary per-draft values the user can override; the session itself remains an orchestration boundary per ADR-002, never a canonical record."
+        },
+        "DraftUUIDs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/uuid" },
+          "maxItems": 500
+        },
+        "CreatedAt": { "$ref": "#/$defs/timestamp" }
       }
     },
     "batchCommandRequest": {
@@ -162,7 +244,7 @@
         "PrintJobUUID": { "$ref": "#/$defs/uuid" },
         "TenantUUID": { "$ref": "#/$defs/uuid" },
         "ThingUUID": { "$ref": "#/$defs/uuid" },
-        "LabelID": { "$ref": "#/$defs/uuid" },
+        "LabelID": { "$ref": "#/$defs/labelId" },
         "LabelTemplateID": { "type": "string", "minLength": 1 },
         "LabelTemplateVersion": { "type": "string", "minLength": 1 },
         "Quantity": { "type": "integer", "minimum": 1, "maximum": 1000 },
