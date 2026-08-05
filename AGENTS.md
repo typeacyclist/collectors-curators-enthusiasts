@@ -7,8 +7,9 @@ The repository document `CCE Solution Governance and Experience Guidelines - AUT
 ## Architecture status
 
 - The runtime target is the Firebase-native serverless stack defined in ADR-001: a React/TypeScript PWA with Capacitor-compatible shells on Firebase Hosting, Firebase Authentication, App Check, Cloud Firestore with Security Rules, Cloud Storage, Cloud Functions written in TypeScript for trusted commands, and Genkit/Vertex AI for governed AI.
-- ADR-003 (`docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`) retires the FastAPI prototype under `cce-orchid-mvp/`. That code is reference-only and must not be deployed; its legacy `cloudbuild.yaml` has been removed.
-- `docs/CODE-REVIEW.md` records the review that prompted this decision.
+- ADR-003 (`docs/architecture/ADR-003-retire-fastapi-adopt-firebase-native.md`) retires the former FastAPI prototype. The prototype was removed from the active tree on 2026-08-05 and remains available only through Git history.
+- `docs/CODE-REVIEW.md` provides the architecture review checklist.
+- `docs/REPOSITORY-AUDIT-2026-08-05.md` records the repository-wide retirement review.
 
 ## Product rules
 
@@ -107,4 +108,4 @@ Before merging implementation changes, run the applicable checks:
 
 - Do not commit credentials, service-account files, `.env` secrets, generated build output, virtual environments, or `node_modules`.
 - New collection types must extend versioned templates and shared contracts rather than hardcoding domain behavior throughout the application.
-- The FastAPI application under `cce-orchid-mvp/` is a reference prototype only, not the target runtime and not to be deployed. See the Architecture status section and ADR-003.
+- Do not restore or extend the retired FastAPI prototype as production-target code. Historical behavior may be inspected through Git history and must be remapped to current contracts and ADRs before reuse.

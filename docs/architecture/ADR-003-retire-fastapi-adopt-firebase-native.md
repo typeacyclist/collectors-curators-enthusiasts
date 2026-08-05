@@ -78,7 +78,9 @@ The following are not part of the target MVP runtime:
 - server-rendered or Python-specific domain contracts
 - direct database CRUD from the user interface
 
-Legacy code and documentation may remain temporarily as reference material, but they must be clearly marked as archived or retired. New implementation work must not extend the retired runtime unless a later ADR explicitly reverses this decision.
+The former FastAPI prototype, its Docker and dependency files, server-rendered templates, prototype tests, and generated sample-label PDF were removed from the active repository tree on 2026-08-05. They remain recoverable through Git history for migration mapping and historical comparison.
+
+New implementation work must not restore or extend the retired runtime unless a later accepted ADR explicitly reverses this decision.
 
 ## Migration rules
 
@@ -89,7 +91,7 @@ Legacy code and documentation may remain temporarily as reference material, but 
 5. Do not migrate secrets, obsolete session data, generated build output, or environment-specific credentials.
 6. Validate tenant isolation before importing any production or pilot data.
 7. Treat the prior PostgreSQL schema as a source mapping, not as the new Firestore document model.
-8. Remove or archive deployment files that could accidentally deploy the retired runtime after equivalent Firebase capabilities exist.
+8. Inspect historical implementation only through Git history and remap each reused behavior to current contracts, authorization, offline, and governance controls.
 
 ## Documentation authority
 
@@ -98,7 +100,8 @@ Legacy code and documentation may remain temporarily as reference material, but 
 - Core runtime and offline architecture: ADR-001
 - Batch and FinOps controls: ADR-002
 - Runtime retirement and migration boundary: ADR-003
-- Review background and migration checklist: `docs/CODE-REVIEW.md`
+- Review checklist: `docs/CODE-REVIEW.md`
+- Repository retirement record: `docs/REPOSITORY-AUDIT-2026-08-05.md`
 
 When documents conflict, the authoritative governance document and accepted ADRs control implementation details. Product requirements remain valid unless an ADR changes only the technical mechanism used to deliver them.
 
@@ -112,10 +115,12 @@ When documents conflict, the authoritative governance document and accepted ADRs
 - Reduced MVP infrastructure and deployment complexity
 - Shared TypeScript contracts across client and trusted functions
 - Native integration with Genkit, Vertex AI, App Check, and Firebase emulators
+- Lower risk that obsolete prototype code is mistaken for current implementation
 
 ### Costs and risks
 
 - Existing FastAPI and PostgreSQL code cannot be treated as production-ready target code
+- Historical prototype behavior requires Git-history inspection when migration mapping is needed
 - Firestore data modeling and query design require deliberate contract work
 - Security Rules and emulator tests become mandatory
 - Offline drafts, retries, conflicts, and partial batch outcomes require explicit application state
@@ -129,4 +134,4 @@ This decision is implemented when:
 2. New contracts are language-neutral and shared by the React client and TypeScript functions.
 3. Firebase emulator tests cover authentication, tenant isolation, commands, retries, and conflicts.
 4. The PWA supports required offline intake and synchronized canonical commit.
-5. Legacy deployment assets are archived or clearly marked non-authoritative.
+5. The retired FastAPI runtime and its deployment, dependency, template, test, and generated-artifact files are absent from the active repository tree.
